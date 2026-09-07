@@ -17,6 +17,9 @@ reproducible build artifacts and should not be committed.
 - `symbols.tex` — parameter definitions, physical constants, units, and field
   conventions.
 - `sections/hamiltonian.tex` — atomistic spin Hamiltonian.
+- `sections/macrospin_effective_field.tex` — one- and two-sublattice macrospin
+  energies and effective fields, including anisotropy, demagnetization,
+  dipolar coupling, and inter-sublattice exchange.
 - `sections/llg_equation.tex` — LLGS and equivalent LL equations with field-like
   torque, including the torque amplitudes and sign convention.
 - `sections/spin_torque.tex` — reusable damping-like and field-like spin--orbit

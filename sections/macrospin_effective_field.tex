@@ -1,0 +1,209 @@
+\subsection{Macrospin Effective Fields}
+
+\paragraph{Field convention.}
+For a fixed-length macrospin with normalized magnetization $\mvec$, let $w$
+denote the magnetic energy density in $\mathrm{J\,m^{-3}}$.  The effective
+magnetic field and the corresponding effective flux density are
+\begin{equation}
+    \Heff
+    =-\frac{1}{\mu_0\Ms}\frac{\partial w}{\partial\mvec},
+    \qquad
+    \vect{B}_{\mathrm{eff}}=\mu_0\Heff.
+    \label{eq:macrospin-effective-field}
+\end{equation}
+Thus, an LLG equation written with $\gamma_0=\mu_0\abs{\gamma}$ uses
+$\Heff$ in $\mathrm{A\,m^{-1}}$, whereas one written with
+$\abs{\gamma}$ uses $\vect{B}_{\mathrm{eff}}$ in tesla.  The two
+conventions are physically equivalent but their field variables must not be
+mixed.
+
+Unless stated otherwise, $K_u$, $A_{12}$, and the sublattice constants $K_i$
+in Eq.~\eqref{eq:two-sublattice-energy} are energy densities in
+$\mathrm{J\,m^{-3}}$.  The interfacial $K_i$ in the combination
+$K_{\mathrm{bulk}}+K_i/t_{\mathrm{FM}}$ is instead in
+$\mathrm{J\,m^{-2}}$, and every saturation magnetization is in
+$\mathrm{A\,m^{-1}}$.  The tensors $\mathsf{N}$ and $\mathsf{K}_{fp}$ are
+dimensionless.
+
+\subsubsection{One-Sublattice Model}
+
+\paragraph{Energy density and field decomposition.}
+For uniaxial anisotropy with easy axis $\unitvect{u}$, a dimensionless
+symmetric demagnetization tensor $\mathsf{N}$, an applied field
+$\vect{H}_{\mathrm{ext}}$, and a dipolar field $\vect{H}_{\mathrm{dip}}$
+produced by another magnetic body, use the uniaxial-anisotropy convention
+from slides 13--14 of the EE237 Week 5 lecture notes~\cite{ee237-week5} and
+take
+\begin{equation}
+    w_1
+    =K_u\left[1-\bigl(\mvec\cdot\unitvect{u}\bigr)^2\right]
+    +\frac{\mu_0\Ms^2}{2}\mvec\cdot\mathsf{N}\mvec
+    -\mu_0\Ms\mvec\cdot
+    \bigl(\vect{H}_{\mathrm{ext}}+\vect{H}_{\mathrm{dip}}\bigr).
+    \label{eq:one-sublattice-energy}
+\end{equation}
+Slide 21 of the same notes writes the demagnetization self-energy
+as~\cite{ee237-week5}
+\begin{align}
+    E_{\mathrm{demag}}
+     & =-\frac{\mu_0}{2}\int_V
+    \vect{M}(\vect{r})\cdot\vect{H}_{\mathrm{demag}}(\vect{r})
+    \,\dd^3r,
+    \label{eq:macrospin-demag-energy-integral}                 \\
+    w_{\mathrm{demag}}
+     & =-\frac{\mu_0}{2}\vect{M}\cdot\vect{H}_{\mathrm{demag}}
+    =\frac{\mu_0\Ms^2}{2}\mvec\cdot\mathsf{N}\mvec
+    \quad\text{(uniform macrospin)}.
+    \label{eq:macrospin-demag-energy-density}
+\end{align}
+The factor $1/2$ avoids double counting the magnet's self-interaction.
+Equation~\eqref{eq:macrospin-effective-field} gives
+\begin{align}
+    \vect{H}_{\mathrm{an}}
+     & =\frac{2K_u}{\mu_0\Ms}
+    \bigl(\mvec\cdot\unitvect{u}\bigr)\unitvect{u},
+     &
+    \vect{B}_{\mathrm{an}}
+     & =\frac{2K_u}{\Ms}
+    \bigl(\mvec\cdot\unitvect{u}\bigr)\unitvect{u},
+    \label{eq:macrospin-anisotropy-field} \\
+    \vect{H}_{\mathrm{demag}}
+     & =-\Ms\mathsf{N}\mvec,
+     &
+    \vect{B}_{\mathrm{demag}}
+     & =-\mu_0\Ms\mathsf{N}\mvec.
+    \label{eq:macrospin-demag-field}
+\end{align}
+For $\unitvect{u}=\unitvect{z}$, the anisotropy term reduces to
+$K_u(1-m_z^2)=K_u\sin^2\theta$, as on slide 13. Near $m_z=1$, slide 14 therefore
+gives $H_{\mathrm{an},z}=2K_u/(\mu_0\Ms)$.
+For a thin film with bulk and interfacial uniaxial anisotropy,
+$K_u=K_{\mathrm{bulk}}+K_i/t_{\mathrm{FM}}$. For principal axes,
+$\mathsf{N}=\operatorname{diag}(N_x,N_y,N_z)$ and
+$N_x+N_y+N_z=1$.
+
+\paragraph{Dipolar field.}
+Let a pinned macrospin have volume $V_p$, saturation magnetization
+$M_{\mathrm{s},p}$, and direction $\mvec_p$, so its magnetic moment is
+$\vect{\mu}_p=V_pM_{\mathrm{s},p}\mvec_p$.
+In the point-dipole approximation, at displacement
+$\vect{r}=r\unitvect{r}$ from the pinned layer to the free layer, slide 22
+gives the dipole formula~\cite{ee237-week5}.  The slide denotes it by
+$\vect{H}_i$, but its factor $\mu_0$ makes it a flux density in tesla;
+therefore, in the convention of this document,
+\begin{align}
+    \vect{B}_{\mathrm{dip}}
+     & =\frac{\mu_0}{4\pi r^3}
+    \left[3\bigl(\vect{\mu}_p\cdot\unitvect{r}\bigr)\unitvect{r}
+        -\vect{\mu}_p\right]
+    =\mu_0\vect{H}_{\mathrm{dip}},
+    \label{eq:macrospin-dipole-flux-density}
+\end{align}
+
+The complete conservative one-sublattice field, with an optional stochastic
+field added after taking the energy derivative, is
+\begin{equation}
+    \Heff
+    =\vect{H}_{\mathrm{ext}}
+    +\vect{H}_{\mathrm{an}}
+    +\vect{H}_{\mathrm{demag}}
+    +\vect{H}_{\mathrm{dip}}
+    +\Hth.
+    \label{eq:one-sublattice-total-field}
+\end{equation}
+Spin-transfer and spin--orbit torques are nonconservative and are not part of
+the energy derivative in Eq.~\eqref{eq:macrospin-effective-field}.
+
+\subsubsection{Two-Sublattice Collinear Model}
+
+\paragraph{Fixed-length LLG model.}
+Let $\mvec_1$ and $\mvec_2$ be separately normalized sublattice
+magnetizations with saturation magnetizations $M_{\mathrm{s},1}$ and
+$M_{\mathrm{s},2}$.  Apply the slide-13 uniaxial energy
+independently to each sublattice~\cite{ee237-week5} and use the
+exchange-energy density convention
+\begin{equation}
+    w_2
+    =\sum_{i=1}^{2}K_i
+    \left[1-\bigl(\mvec_i\cdot\unitvect{u}_i\bigr)^2\right]
+    +A_{12}\mvec_1\cdot\mvec_2
+    -\mu_0\sum_{i=1}^{2}M_{\mathrm{s},i}
+    \mvec_i\cdot\vect{H}_{\mathrm{ext}},
+    \label{eq:two-sublattice-energy}
+\end{equation}
+$A_{12}>0$ favors antiparallel alignment.  Applying
+$\vect{H}_{\mathrm{eff},i}=-(\mu_0M_{\mathrm{s},i})^{-1}
+    \partial w_2/\partial\mvec_i$ yields, for $j\ne i$,
+\begin{align}
+    \vect{H}_{\mathrm{an},i}
+     & =\frac{2K_i}{\mu_0M_{\mathrm{s},i}}
+    \bigl(\mvec_i\cdot\unitvect{u}_i\bigr)\unitvect{u}_i,
+    \label{eq:two-sublattice-anisotropy-field}        \\
+    \vect{H}_{\mathrm{ex},i}
+     & =-\frac{A_{12}}{\mu_0M_{\mathrm{s},i}}\mvec_j,
+     &
+    \vect{B}_{\mathrm{ex},i}
+     & =-\frac{A_{12}}{M_{\mathrm{s},i}}\mvec_j.
+    \label{eq:two-sublattice-exchange-field}
+\end{align}
+The additive anisotropy constants $K_1+K_2$ do not contribute to either
+effective field.
+This is the convention used in the two-sublattice ferrimagnetic macrospin
+model of Yuan et al.~\cite{yuan2023thermal}, where $A_{12}=A_{\mathrm{ex}}>0$.
+If the exchange energy is instead written
+$-J_{12}\mvec_1\cdot\mvec_2$, then
+$\vect{H}_{\mathrm{ex},i}=J_{12}\mvec_j/
+    (\mu_0M_{\mathrm{s},i})$ and antiferromagnetic coupling corresponds to
+$J_{12}<0$.
+Because each fixed-length sublattice is spatially uniform, an
+intra-sublattice exchange energy is orientation independent and produces no
+macrospin torque; spatial exchange stiffness is therefore absent from this
+model class.
+
+When the two sublattices occupy the same uniformly magnetized body, define
+\begin{equation}
+    \vect{M}_{\mathrm{net}}
+    =M_{\mathrm{s},1}\mvec_1+M_{\mathrm{s},2}\mvec_2,
+    \qquad
+    \vect{l}=\frac{\mvec_1-\mvec_2}{2}.
+    \label{eq:macrospin-net-neel}
+\end{equation}
+The common demagnetizing field is then
+$\vect{H}_{\mathrm{demag}}=-\mathsf{N}\vect{M}_{\mathrm{net}}$.
+Unequal sublattice moments describe a ferrimagnet; equal antiparallel moments
+give a compensated antiferromagnet.  A convenient total-field form is
+\begin{equation}
+    \vect{H}_{\mathrm{eff},i}
+    =\vect{H}_{\mathrm{ext}}
+    +\vect{H}_{\mathrm{an},i}
+    +\vect{H}_{\mathrm{ex},i}
+    +\vect{H}_{\mathrm{demag}}
+    +\vect{H}_{\mathrm{dip}}
+    +\vect{H}_{\mathrm{th},i}.
+    \label{eq:two-sublattice-total-field}
+\end{equation}
+The dipolar term may be omitted for a compensated antiferromagnet when the
+net stray field is negligible, but this is a model assumption rather than an
+identity.
+
+\paragraph{Implementation mapping.}
+The current one-sublattice \texttt{ODE\_LLG\_integral} implementation stores
+flux-density quantities in tesla~\cite{ode-llg-code}.  Its
+\texttt{field\_eta.m} evaluates the following expressions, where its input
+named \texttt{Hk} is $B_k$:
+\begin{align*}
+    \vect{B}_{\mathrm{an}}
+     & =B_k m_y\unitvect{y} \quad\text{(IMA)},
+     &
+    \vect{B}_{\mathrm{an}}
+     & =B_k m_z\unitvect{z} \quad\text{(PMA)},      \\
+    \vect{B}_{\mathrm{demag}}
+     & =-\mu_0\Ms\mathsf{N}\mvec,
+     &
+    \vect{B}_{\mathrm{dip}}
+     & =\mu_0\mathsf{K}_{12}\Ms\mvec_{\mathrm{PL}},
+\end{align*}
+after converting the input $\Ms$ from $\mathrm{emu\,cm^{-3}}$ to
+$\mathrm{A\,m^{-1}}$.  It sums these with the applied and thermal fields.
+The two-sublattice equations above are publication-grounded extensions and
+are not implemented by that repository.
