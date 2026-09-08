@@ -16,6 +16,11 @@
 
 ## Reference style
 
+- Every equation must have a nearby citation or explicit source reference to at
+  least one of the following: the EE237 lecture notes, a paper authored or
+  coauthored by Zhifeng Zhu, or any repository, implementation, or source file
+  hosted under Zhifeng Zhu's GitHub namespace at `https://github.com/zhuzibn/`,
+  including shared utilities such as `constantfile.m`.
 - Store bibliography entries in `references.tex` and cite them from the document
   with `\cite{...}`.
 - Ensure every citation used in the document appears in the reference section.

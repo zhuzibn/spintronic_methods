@@ -1,7 +1,8 @@
 \subsection{Thermal Stability Factor}
 
 \paragraph{Equation.}
-For a single energy barrier $E_{\mathrm{b}}$, the thermal stability factor is
+For a single energy barrier $E_{\mathrm{b}}$, the thermal stability factor
+is~\cite{ee237-week10}
 
 \begin{equation}
     \input{sections/thermal_stability_delta.tex}
@@ -9,21 +10,3 @@ For a single energy barrier $E_{\mathrm{b}}$, the thermal stability factor is
 
 \paragraph{Units.}
 $E_{\mathrm{b}}$ and $\kB T$ must use the same energy unit; $\Delta$ is dimensionless.
-
-\subsection{Thermal Field in a Macrospin Model}
-
-\paragraph{Correlation.}
-For the $\vect{H}$-field convention used in Eq.~\eqref{eq:llg-gilbert}, one common
-white-noise convention is
-\begin{equation}
-    \avg{H_{\mathrm{th},i}(t)H_{\mathrm{th},j}(t')}
-    = \frac{2\alpha\kB T}{\gamma_0\Ms V}\,
-    \delta_{ij}\,\delta(t-t').
-    \label{eq:thermal-field-correlation}
-\end{equation}
-
-\paragraph{Implementation notes.}
-The discrete-time variance depends on the stochastic calculus convention, the form
-of the LLG equation, and the time-step definition.  Derive the sampled-noise amplitude
-from the exact solver convention rather than copying Eq.~\eqref{eq:thermal-field-correlation}
-without checking it.

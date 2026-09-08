@@ -19,13 +19,12 @@ reproducible build artifacts and should not be committed.
 - `sections/hamiltonian.tex` — atomistic spin Hamiltonian.
 - `sections/macrospin_effective_field.tex` — one- and two-sublattice macrospin
   energies and effective fields, including anisotropy, demagnetization,
-  dipolar coupling, and inter-sublattice exchange.
+  dipolar coupling, thermal fluctuations, and inter-sublattice exchange.
 - `sections/llg_equation.tex` — LLGS and equivalent LL equations with field-like
   torque, including the torque amplitudes and sign convention.
 - `sections/spin_torque.tex` — reusable damping-like and field-like spin--orbit
   torque expressions not included in the complete document.
-- `sections/thermal_stability.tex` — thermal stability factor and macrospin thermal
-  field correlation.
+- `sections/thermal_stability.tex` — thermal stability factor.
 - `sections/thermal_stability_delta.tex` — reusable equation fragment for the
   thermal stability factor.
 - `sections/build-equation.sh` — renders one equation fragment as an SVG.

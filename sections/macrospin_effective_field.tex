@@ -3,7 +3,7 @@
 \paragraph{Field convention.}
 For a fixed-length macrospin with normalized magnetization $\mvec$, let $w$
 denote the magnetic energy density in $\mathrm{J\,m^{-3}}$.  The effective
-magnetic field and the corresponding effective flux density are
+magnetic field and the corresponding effective flux density are~\cite{ee237-week5}
 \begin{equation}
     \Heff
     =-\frac{1}{\mu_0\Ms}\frac{\partial w}{\partial\mvec},
@@ -17,8 +17,7 @@ $\abs{\gamma}$ uses $\vect{B}_{\mathrm{eff}}$ in tesla.  The two
 conventions are physically equivalent but their field variables must not be
 mixed.
 
-Unless stated otherwise, $K_u$, $A_{12}$, and the sublattice constants $K_i$
-in Eq.~\eqref{eq:two-sublattice-energy} are energy densities in
+Unless stated otherwise, $K_u$ and $A_{12}$ are energy densities in
 $\mathrm{J\,m^{-3}}$.  The interfacial $K_i$ in the combination
 $K_{\mathrm{bulk}}+K_i/t_{\mathrm{FM}}$ is instead in
 $\mathrm{J\,m^{-2}}$, and every saturation magnetization is in
@@ -42,6 +41,32 @@ take
     \bigl(\vect{H}_{\mathrm{ext}}+\vect{H}_{\mathrm{dip}}\bigr).
     \label{eq:one-sublattice-energy}
 \end{equation}
+
+\paragraph{External field.}
+The part of the final term in Eq.~\eqref{eq:one-sublattice-energy} that is
+proportional to $\vect{H}_{\mathrm{ext}}$ is the Zeeman coupling to the
+applied field.  Its derivative contributes $\vect{H}_{\mathrm{ext}}$ directly
+to $\Heff$~\cite{ee237-week5}.
+
+\paragraph{Uniaxial anisotropy field.}
+Equation~\eqref{eq:macrospin-effective-field} gives~\cite{ee237-week5}
+\begin{equation}
+    \vect{H}_{\mathrm{an}}
+     =\frac{2K_u}{\mu_0\Ms}
+    \bigl(\mvec\cdot\unitvect{u}\bigr)\unitvect{u},
+    \qquad
+    \vect{B}_{\mathrm{an}}
+     =\frac{2K_u}{\Ms}
+    \bigl(\mvec\cdot\unitvect{u}\bigr)\unitvect{u}.
+    \label{eq:macrospin-anisotropy-field}
+\end{equation}
+For $\unitvect{u}=\unitvect{z}$, the anisotropy term reduces to
+$K_u(1-m_z^2)=K_u\sin^2\theta$, as on slide 13. Near $m_z=1$, slide 14
+therefore gives $H_{\mathrm{an},z}=2K_u/(\mu_0\Ms)$.
+For a thin film with bulk and interfacial uniaxial anisotropy,
+$K_u=K_{\mathrm{bulk}}+K_i/t_{\mathrm{FM}}$.
+
+\paragraph{Demagnetization field.}
 Slide 21 of the same notes writes the demagnetization self-energy
 as~\cite{ee237-week5}
 \begin{align}
@@ -58,27 +83,15 @@ as~\cite{ee237-week5}
 \end{align}
 The factor $1/2$ avoids double counting the magnet's self-interaction.
 Equation~\eqref{eq:macrospin-effective-field} gives
-\begin{align}
-    \vect{H}_{\mathrm{an}}
-     & =\frac{2K_u}{\mu_0\Ms}
-    \bigl(\mvec\cdot\unitvect{u}\bigr)\unitvect{u},
-     &
-    \vect{B}_{\mathrm{an}}
-     & =\frac{2K_u}{\Ms}
-    \bigl(\mvec\cdot\unitvect{u}\bigr)\unitvect{u},
-    \label{eq:macrospin-anisotropy-field} \\
+\begin{equation}
     \vect{H}_{\mathrm{demag}}
-     & =-\Ms\mathsf{N}\mvec,
-     &
+     =-\Ms\mathsf{N}\mvec,
+    \qquad
     \vect{B}_{\mathrm{demag}}
-     & =-\mu_0\Ms\mathsf{N}\mvec.
+     =-\mu_0\Ms\mathsf{N}\mvec.
     \label{eq:macrospin-demag-field}
-\end{align}
-For $\unitvect{u}=\unitvect{z}$, the anisotropy term reduces to
-$K_u(1-m_z^2)=K_u\sin^2\theta$, as on slide 13. Near $m_z=1$, slide 14 therefore
-gives $H_{\mathrm{an},z}=2K_u/(\mu_0\Ms)$.
-For a thin film with bulk and interfacial uniaxial anisotropy,
-$K_u=K_{\mathrm{bulk}}+K_i/t_{\mathrm{FM}}$. For principal axes,
+\end{equation}
+For principal axes,
 $\mathsf{N}=\operatorname{diag}(N_x,N_y,N_z)$ and
 $N_x+N_y+N_z=1$.
 
@@ -100,8 +113,37 @@ therefore, in the convention of this document,
     \label{eq:macrospin-dipole-flux-density}
 \end{align}
 
-The complete conservative one-sublattice field, with an optional stochastic
-field added after taking the energy derivative, is
+\paragraph{Thermal field.}
+Following Eq.~(4) of Zhu et al.~\cite{zhu2019voltage}, write the sampled
+thermal field as
+\begin{align}
+    \vect{B}_{\mathrm{th}}
+     =\mu_0\Hth
+     & =\mathcal{N}_1(0,u_B)\unitvect{x}
+       +\mathcal{N}_2(0,u_B)\unitvect{y}
+       +\mathcal{N}_3(0,u_B)\unitvect{z},
+    \label{eq:thermal-field-discrete} \\
+    u_B
+     & =\sqrt{\frac{2\alpha\kB T}
+       {V_{\mathrm{FL}}\Ms\abs{\gamma}
+        \left(1+\alpha^2\right)\Delta t}}.
+    \label{eq:thermal-field-standard-deviation}
+\end{align}
+Here the $\mathcal{N}_i(0,u_B)$ are independent normal random variables with
+zero mean and standard deviation $u_B$, $V_{\mathrm{FL}}$ is the free-layer
+volume, and $\Delta t$ is the duration over which a sampled field is held
+constant.  With $\abs{\gamma}$ in $\mathrm{rad\,s^{-1}\,T^{-1}}$ and $\Ms$ in
+$\mathrm{A\,m^{-1}}$, $u_B$ is in tesla; the corresponding $\vect{H}$-field
+standard deviation is $u_H=u_B/\mu_0$.
+
+The source uses independent samples over
+$\Delta t=5\,\mathrm{ps}$~\cite{zhu2019voltage}.  When adopting another
+integration interval or LLG convention, recompute the noise amplitude
+consistently rather than reusing that numerical value.
+
+\paragraph{Total field.}
+The total one-sublattice field, with the stochastic field added after taking
+the energy derivative, is~\cite{ode-llg-code}
 \begin{equation}
     \Heff
     =\vect{H}_{\mathrm{ext}}
@@ -113,78 +155,6 @@ field added after taking the energy derivative, is
 \end{equation}
 Spin-transfer and spin--orbit torques are nonconservative and are not part of
 the energy derivative in Eq.~\eqref{eq:macrospin-effective-field}.
-
-\subsubsection{Two-Sublattice Collinear Model}
-
-\paragraph{Fixed-length LLG model.}
-Let $\mvec_1$ and $\mvec_2$ be separately normalized sublattice
-magnetizations with saturation magnetizations $M_{\mathrm{s},1}$ and
-$M_{\mathrm{s},2}$.  Apply the slide-13 uniaxial energy
-independently to each sublattice~\cite{ee237-week5} and use the
-exchange-energy density convention
-\begin{equation}
-    w_2
-    =\sum_{i=1}^{2}K_i
-    \left[1-\bigl(\mvec_i\cdot\unitvect{u}_i\bigr)^2\right]
-    +A_{12}\mvec_1\cdot\mvec_2
-    -\mu_0\sum_{i=1}^{2}M_{\mathrm{s},i}
-    \mvec_i\cdot\vect{H}_{\mathrm{ext}},
-    \label{eq:two-sublattice-energy}
-\end{equation}
-$A_{12}>0$ favors antiparallel alignment.  Applying
-$\vect{H}_{\mathrm{eff},i}=-(\mu_0M_{\mathrm{s},i})^{-1}
-    \partial w_2/\partial\mvec_i$ yields, for $j\ne i$,
-\begin{align}
-    \vect{H}_{\mathrm{an},i}
-     & =\frac{2K_i}{\mu_0M_{\mathrm{s},i}}
-    \bigl(\mvec_i\cdot\unitvect{u}_i\bigr)\unitvect{u}_i,
-    \label{eq:two-sublattice-anisotropy-field}        \\
-    \vect{H}_{\mathrm{ex},i}
-     & =-\frac{A_{12}}{\mu_0M_{\mathrm{s},i}}\mvec_j,
-     &
-    \vect{B}_{\mathrm{ex},i}
-     & =-\frac{A_{12}}{M_{\mathrm{s},i}}\mvec_j.
-    \label{eq:two-sublattice-exchange-field}
-\end{align}
-The additive anisotropy constants $K_1+K_2$ do not contribute to either
-effective field.
-This is the convention used in the two-sublattice ferrimagnetic macrospin
-model of Yuan et al.~\cite{yuan2023thermal}, where $A_{12}=A_{\mathrm{ex}}>0$.
-If the exchange energy is instead written
-$-J_{12}\mvec_1\cdot\mvec_2$, then
-$\vect{H}_{\mathrm{ex},i}=J_{12}\mvec_j/
-    (\mu_0M_{\mathrm{s},i})$ and antiferromagnetic coupling corresponds to
-$J_{12}<0$.
-Because each fixed-length sublattice is spatially uniform, an
-intra-sublattice exchange energy is orientation independent and produces no
-macrospin torque; spatial exchange stiffness is therefore absent from this
-model class.
-
-When the two sublattices occupy the same uniformly magnetized body, define
-\begin{equation}
-    \vect{M}_{\mathrm{net}}
-    =M_{\mathrm{s},1}\mvec_1+M_{\mathrm{s},2}\mvec_2,
-    \qquad
-    \vect{l}=\frac{\mvec_1-\mvec_2}{2}.
-    \label{eq:macrospin-net-neel}
-\end{equation}
-The common demagnetizing field is then
-$\vect{H}_{\mathrm{demag}}=-\mathsf{N}\vect{M}_{\mathrm{net}}$.
-Unequal sublattice moments describe a ferrimagnet; equal antiparallel moments
-give a compensated antiferromagnet.  A convenient total-field form is
-\begin{equation}
-    \vect{H}_{\mathrm{eff},i}
-    =\vect{H}_{\mathrm{ext}}
-    +\vect{H}_{\mathrm{an},i}
-    +\vect{H}_{\mathrm{ex},i}
-    +\vect{H}_{\mathrm{demag}}
-    +\vect{H}_{\mathrm{dip}}
-    +\vect{H}_{\mathrm{th},i}.
-    \label{eq:two-sublattice-total-field}
-\end{equation}
-The dipolar term may be omitted for a compensated antiferromagnet when the
-net stray field is negligible, but this is a model assumption rather than an
-identity.
 
 \paragraph{Implementation mapping.}
 The current one-sublattice \texttt{ODE\_LLG\_integral} implementation stores
@@ -205,5 +175,44 @@ named \texttt{Hk} is $B_k$:
 \end{align*}
 after converting the input $\Ms$ from $\mathrm{emu\,cm^{-3}}$ to
 $\mathrm{A\,m^{-1}}$.  It sums these with the applied and thermal fields.
-The two-sublattice equations above are publication-grounded extensions and
-are not implemented by that repository.
+
+\subsubsection{Two-Sublattice Collinear Model}
+
+\paragraph{Inter-sublattice exchange field.}
+Let $\mvec_1$ and $\mvec_2$ be separately normalized sublattice
+magnetizations with saturation magnetizations $M_{\mathrm{s},1}$ and
+$M_{\mathrm{s},2}$.  The exchange-energy density convention used by the
+two-sublattice ferrimagnetic macrospin model of Yuan et
+al.~\cite{yuan2023thermal} is
+\begin{equation}
+    w_{\mathrm{ex},12}=A_{12}\mvec_1\cdot\mvec_2,
+    \qquad A_{12}>0,
+    \label{eq:two-sublattice-exchange-energy}
+\end{equation}
+so $A_{12}>0$ favors antiparallel alignment.  Applying
+$\vect{H}_{\mathrm{ex},i}=-(\mu_0M_{\mathrm{s},i})^{-1}
+    \partial w_{\mathrm{ex},12}/\partial\mvec_i$ yields, for $j\ne i$,
+\begin{equation}
+    \vect{H}_{\mathrm{ex},i}
+     =-\frac{A_{12}}{\mu_0M_{\mathrm{s},i}}\mvec_j,
+    \qquad
+    \vect{B}_{\mathrm{ex},i}
+     =-\frac{A_{12}}{M_{\mathrm{s},i}}\mvec_j.
+    \label{eq:two-sublattice-exchange-field}
+\end{equation}
+In that source, $A_{12}=A_{\mathrm{ex}}>0$.
+If the exchange energy is instead written
+$-J_{12}\mvec_1\cdot\mvec_2$, then
+$\vect{H}_{\mathrm{ex},i}=J_{12}\mvec_j/
+    (\mu_0M_{\mathrm{s},i})$ and antiferromagnetic coupling corresponds to
+$J_{12}<0$.
+Because each fixed-length sublattice is spatially uniform, an
+intra-sublattice exchange energy is orientation independent and produces no
+macrospin torque; spatial exchange stiffness is therefore absent from this
+model class.
+
+Only the exchange contribution unique to the two-sublattice model is stated
+here; the shared external, anisotropy, demagnetization, dipolar, and thermal
+field formulas are defined above and are not repeated.  This two-sublattice
+exchange extension is publication-grounded and is not implemented by the
+\texttt{ODE\_LLG\_integral} repository.
