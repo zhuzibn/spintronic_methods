@@ -16,6 +16,9 @@ reproducible build artifacts and should not be committed.
 - `references.tex` — numbered references cited by the equation sections.
 - `symbols.tex` — parameter definitions, physical constants, units, and field
   conventions.
+- `sections/material_parameters.tex` — shared heavy-metal spin-Hall angles and
+  literature- and implementation-sourced parameter sets for CoFeB, GdFeCo, and
+  Mn$_3$Sn, with model and unit conventions.
 - `sections/hamiltonian.tex` — atomistic spin Hamiltonian.
 - `sections/macrospin_effective_field.tex` — one- and two-sublattice macrospin
   energies and effective fields, including anisotropy, demagnetization,

@@ -52,11 +52,11 @@ to $\Heff$~\cite{ee237-week5}.
 Equation~\eqref{eq:macrospin-effective-field} gives~\cite{ee237-week5}
 \begin{equation}
     \vect{H}_{\mathrm{an}}
-     =\frac{2K_u}{\mu_0\Ms}
+    =\frac{2K_u}{\mu_0\Ms}
     \bigl(\mvec\cdot\unitvect{u}\bigr)\unitvect{u},
     \qquad
     \vect{B}_{\mathrm{an}}
-     =\frac{2K_u}{\Ms}
+    =\frac{2K_u}{\Ms}
     \bigl(\mvec\cdot\unitvect{u}\bigr)\unitvect{u}.
     \label{eq:macrospin-anisotropy-field}
 \end{equation}
@@ -85,10 +85,10 @@ The factor $1/2$ avoids double counting the magnet's self-interaction.
 Equation~\eqref{eq:macrospin-effective-field} gives
 \begin{equation}
     \vect{H}_{\mathrm{demag}}
-     =-\Ms\mathsf{N}\mvec,
+    =-\Ms\mathsf{N}\mvec,
     \qquad
     \vect{B}_{\mathrm{demag}}
-     =-\mu_0\Ms\mathsf{N}\mvec.
+    =-\mu_0\Ms\mathsf{N}\mvec.
     \label{eq:macrospin-demag-field}
 \end{equation}
 For principal axes,
@@ -118,15 +118,15 @@ Following Eq.~(4) of Zhu et al.~\cite{zhu2019voltage}, write the sampled
 thermal field as
 \begin{align}
     \vect{B}_{\mathrm{th}}
-     =\mu_0\Hth
+    =\mu_0\Hth
      & =\mathcal{N}_1(0,u_B)\unitvect{x}
-       +\mathcal{N}_2(0,u_B)\unitvect{y}
-       +\mathcal{N}_3(0,u_B)\unitvect{z},
-    \label{eq:thermal-field-discrete} \\
+    +\mathcal{N}_2(0,u_B)\unitvect{y}
+    +\mathcal{N}_3(0,u_B)\unitvect{z},
+    \label{eq:thermal-field-discrete}              \\
     u_B
      & =\sqrt{\frac{2\alpha\kB T}
-       {V_{\mathrm{FL}}\Ms\abs{\gamma}
-        \left(1+\alpha^2\right)\Delta t}}.
+            {V_{\mathrm{FL}}\Ms\abs{\gamma}
+                \left(1+\alpha^2\right)\Delta t}}.
     \label{eq:thermal-field-standard-deviation}
 \end{align}
 Here the $\mathcal{N}_i(0,u_B)$ are independent normal random variables with
@@ -189,27 +189,17 @@ al.~\cite{yuan2023thermal} is
     \qquad A_{12}>0,
     \label{eq:two-sublattice-exchange-energy}
 \end{equation}
-so $A_{12}>0$ favors antiparallel alignment.  Applying
+Applying
 $\vect{H}_{\mathrm{ex},i}=-(\mu_0M_{\mathrm{s},i})^{-1}
     \partial w_{\mathrm{ex},12}/\partial\mvec_i$ yields, for $j\ne i$,
 \begin{equation}
     \vect{H}_{\mathrm{ex},i}
-     =-\frac{A_{12}}{\mu_0M_{\mathrm{s},i}}\mvec_j,
+    =-\frac{A_{12}}{\mu_0M_{\mathrm{s},i}}\mvec_j,
     \qquad
     \vect{B}_{\mathrm{ex},i}
-     =-\frac{A_{12}}{M_{\mathrm{s},i}}\mvec_j.
+    =-\frac{A_{12}}{M_{\mathrm{s},i}}\mvec_j.
     \label{eq:two-sublattice-exchange-field}
 \end{equation}
-In that source, $A_{12}=A_{\mathrm{ex}}>0$.
-If the exchange energy is instead written
-$-J_{12}\mvec_1\cdot\mvec_2$, then
-$\vect{H}_{\mathrm{ex},i}=J_{12}\mvec_j/
-    (\mu_0M_{\mathrm{s},i})$ and antiferromagnetic coupling corresponds to
-$J_{12}<0$.
-Because each fixed-length sublattice is spatially uniform, an
-intra-sublattice exchange energy is orientation independent and produces no
-macrospin torque; spatial exchange stiffness is therefore absent from this
-model class.
 
 Only the exchange contribution unique to the two-sublattice model is stated
 here; the shared external, anisotropy, demagnetization, dipolar, and thermal

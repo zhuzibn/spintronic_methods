@@ -7,6 +7,10 @@
   and inspect the document manually.
 - Run compilation or generated-output validation only when the user explicitly
   requests it.
+- A background Windows MiKTeX integration may automatically rebuild
+  `equations.pdf` after LaTeX source changes. Keep that auto-built PDF in the
+  working tree instead of restoring it. Treat the automatic rebuild as
+  unverified until its build result or generated output has been checked.
 - Before every commit, rebuild `equations.pdf` from the current LaTeX source,
   verify that the build succeeds, stage the PDF with the other changes, and
   include it in the commit. When pushing the commit, push the PDF to GitHub as
@@ -16,6 +20,9 @@
 
 ## Reference style
 
+- When the user asks to refer to a paper, first search
+  `C:\Users\zzf-m\OneDrive\papers\_knowledge` to determine whether that paper
+  has already been processed.
 - Every equation must have a nearby citation or explicit source reference to at
   least one of the following: the EE237 lecture notes, a paper authored or
   coauthored by Zhifeng Zhu, or any repository, implementation, or source file

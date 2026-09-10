@@ -1,0 +1,256 @@
+\section{Representative Material Parameter Sets}
+
+The values below reproduce particular numerical models from papers and
+repository implementations authored or coauthored by Zhifeng Zhu.  They are
+model-specific parameter sets rather than universal material constants.  In
+particular, quantities associated with a heavy-metal layer, spin polarization,
+device geometry, or numerical integration are identified separately from
+intrinsic magnetic parameters.  Fixed-length unit vectors are used in all three
+source-model families summarized here.
+
+\subsection{Property of Heavy Metal}
+
+The spin-Hall angle belongs to the heavy-metal spin-current source and is not
+specific to a ferromagnetic, ferrimagnetic, or antiferromagnetic target layer.
+For the signed representative values in Table~\ref{tab:heavy-metal-properties},
+we use
+$\vect{J}_{\mathrm{s}}=\theta_{\mathrm{SH}}\,
+\vect{\sigma}\times\vect{J}_{\mathrm{c}}$ and choose Pt as the positive
+reference; Ta and W then have negative signs~\cite{sot-stt-compact-model,
+liu2012ta-spin-hall,pai2012w-spin-hall}.  Reversing the current, layer-normal,
+or spin-polarization convention requires a corresponding sign change in the
+torque implementation.
+
+\begin{table}[htbp]
+    \centering
+    \small
+    \renewcommand{\arraystretch}{1.15}
+    \begin{tabular}{p{0.16\linewidth}p{0.31\linewidth}p{0.42\linewidth}}
+        \hline
+        Property & Value & Evidence and qualification \\
+        \hline
+        Pt spin-Hall angle
+            & $+0.07$
+            & Representative literature value quoted by Liu et al. and Pai et
+              al.; defines the positive reference sign \\
+        High-resistivity $\beta$-Ta spin-Hall angle
+            & $-0.12$ to $-0.15$
+            & Consistent magnitudes from ST-FMR, perpendicular switching, and
+              three-terminal switching \\
+        High-resistivity $\beta$-W spin-Hall angle
+            & $-0.30\pm0.02$ (ST-FMR);
+              $-0.33\pm0.06$ (switching)
+            & Negative sign verified relative to Pt; the ST-FMR value is a
+              lower bound if spin diffusion suppresses the measured torque \\
+        Heavy-metal resistivity
+            & $\rho_{\mathrm{HM}}=200\times10^{-8}\ \Omega\,\mathrm{m}$
+            & Representative Ta/W value from the compact model;
+              $\rho_{\mathrm{HM}}=200\ \mu\Omega\,\mathrm{cm}$ \\
+        \hline
+    \end{tabular}
+    \caption{Representative properties of Pt, $\beta$-Ta, and $\beta$-W
+    heavy metals~\cite{sot-stt-compact-model,liu2012ta-spin-hall,
+    pai2012w-spin-hall}.}
+    \label{tab:heavy-metal-properties}
+\end{table}
+
+These values are not universal elemental constants.  In particular, Pai et al.
+find that W changes strongly with film phase and resistivity: a mixed
+$\alpha$/$\beta$ film gives $\lvert\theta_{\mathrm{SH}}\rvert=0.18\pm0.02$,
+whereas their predominantly $\alpha$-W film gives only the upper bound
+$\lvert\theta_{\mathrm{SH}}\rvert<0.07$~\cite{pai2012w-spin-hall}.  The
+material-specific tables below omit $\theta_{\mathrm{SH}}$; select a value from
+the heavy-metal source and sign convention used by the model.
+
+The compact-model README compares reported resistivities of
+$190\ \mu\Omega\,\mathrm{cm}$ for Ta and $170$--$260\ \mu\Omega\,\mathrm{cm}$
+for W, then uses the representative value
+$\rho_{\mathrm{HM}}=200\ \mu\Omega\,\mathrm{cm}$~\cite{sot-stt-compact-model}.
+
+\subsection{Ferromagnet: CoFeB}
+
+The CoFeB free layer is represented by a one-sublattice macrospin LLGS model
+with perpendicular anisotropy.  The anisotropy field and saturation magnetization
+below are the defaults of the SOT/STT compact model; the remaining magnetic and
+drive parameters come from the model of Zhang et
+al.~\cite{sot-stt-compact-model,zhang2024revisiting}.  The compact-model
+parameter named \texttt{Hk} is a flux-density quantity in tesla.  Its
+corresponding $\vect{H}$ field in $\mathrm{A\,m^{-1}}$ is obtained by dividing
+by $\mu_0$.
+
+\begin{table}[htbp]
+    \centering
+    \small
+    \renewcommand{\arraystretch}{1.15}
+    \begin{tabular}{p{0.25\linewidth}p{0.28\linewidth}p{0.36\linewidth}}
+        \hline
+        Quantity & Value & Role or convention \\
+        \hline
+        Uniaxial anisotropy field
+            & $B_k=1.5\ \mathrm{T}$
+            & Compact-model parameter \texttt{Hk};
+              $H_k\approx1.19\times10^6\ \mathrm{A\,m^{-1}}$ \\
+        Saturation magnetization
+            & $M_s=1000\ \mathrm{emu\,cm^{-3}}$
+            & $M_s=1.00\times10^6\ \mathrm{A\,m^{-1}}$;
+              $\mu_0M_s\approx1.26\ \mathrm{T}$ \\
+        Gilbert damping
+            & $\alpha=0.02$
+            & Magnetic model parameter \\
+        \hline
+    \end{tabular}
+    \caption{Selected CoFeB macrospin parameters from the SOT/STT compact model
+    and Zhang et al.~\cite{sot-stt-compact-model,zhang2024revisiting}.}
+    \label{tab:cofeb-parameters}
+\end{table}
+
+\paragraph{Parameter justification.}
+Based on Nat. Mater. \textbf{9}, 721 (2010).,
+$H_{\mathrm{an}}=2(K_{\mathrm{bulk}}+K_i/t_{\mathrm{FL}})/M_s$ with
+$K_{\mathrm{bulk}}=2.245\times10^5\ \mathrm{J\,m^{-3}}$,
+$K_i=1.286\times10^{-3}\ \mathrm{J\,m^{-2}}$,
+$M_s=1.58\ \mathrm{T}=1257\ \mathrm{emu\,cm^{-3}}$, when we use
+$t_{\mathrm{FL}}=1.2\ \mathrm{nm}$, it gives $H_{\mathrm{an}}=2.06\ \mathrm{T}$.
+Here we approximate $M_s=1000\ \mathrm{emu\,cm^{-3}}$,
+$H_k=1.5\ \mathrm{T}$~\cite{sot-stt-compact-model}.
+
+\subsection{Ferrimagnet: GdFeCo}
+
+Zhang et al. use a random two-dimensional atomistic
+$(\mathrm{FeCo})_{1-x}\mathrm{Gd}_x$ lattice driven by damping-like STT,
+whereas Zhu et al. use a one-dimensional atomistic GdFeCo model driven by
+SOT~\cite{zhang2022spatially,zhu2020terahertz}.  Both are fixed-length LLG or
+LLGS models.  The 2022 paper states that its parameters are otherwise the same
+as those in the 2020 paper, but replaces the single exchange coefficient with
+three bond-specific values.  Table~\ref{tab:gdfeco-parameters} therefore keeps
+the two published exchange parameterizations separately rather than selecting
+or averaging them.
+
+\begin{table}[htbp]
+    \centering
+    \small
+    \renewcommand{\arraystretch}{1.15}
+    \begin{tabular}{p{0.19\linewidth}p{0.31\linewidth}p{0.31\linewidth}}
+        \hline
+        Quantity & Zhu et al. (2020) & Zhang et al. (2022) \\
+        \hline
+        Spatial model
+            & 1D atomistic lattice with lattice constant $d=0.4\ \mathrm{nm}$;
+              strip length and width are $400$ and $40\ \mathrm{nm}$
+            & Random 2D square lattice; each interior site has four nearest
+              neighbors; the main phase diagrams use 100 atoms \\
+        Exchange
+            & $A_{\mathrm{ex}}=+3\ \mathrm{meV}
+              =+4.8065\times10^{-22}\ \mathrm{J}$
+            & $A_{\mathrm{Gd-Gd}}=-1.26\times10^{-21}\ \mathrm{J}$;
+              $A_{\mathrm{FeCo-FeCo}}=-2.83\times10^{-21}\ \mathrm{J}$;
+              $A_{\mathrm{FeCo-Gd}}=+1.09\times10^{-21}\ \mathrm{J}$ \\
+        Perpendicular anisotropy
+            & $K_{\mathrm{TM}}=K_{\mathrm{RE}}=0.04\ \mathrm{meV}$
+            & same as Zhu et al. (2020) \\
+        Hard-axis anisotropy
+            & $\kappa_{\mathrm{TM}}=\kappa_{\mathrm{RE}}=0.2\ \mu\mathrm{eV}$
+            & Not included in the stated Hamiltonian \\
+        DMI
+            & $D=0.128\ \mathrm{meV}$
+            & Not included in the stated Hamiltonian \\
+        Gilbert damping
+            & $\alpha_{\mathrm{TM}}=\alpha_{\mathrm{RE}}=0.015$
+            & same as Zhu et al. (2020) \\
+        Land\'e factors
+            & $g_{\mathrm{TM}}=2.2$; $g_{\mathrm{RE}}=2.0$
+            & same as Zhu et al. (2020) \\
+        Sublattice magnetizations
+            & $M_{s,\mathrm{TM}}=1149\ \mathrm{kA\,m^{-1}}$;
+              $M_{s,\mathrm{RE}}=1012\ \mathrm{kA\,m^{-1}}$ at
+              $T=300\ \mathrm{K}$
+            & same as Zhu et al. (2020) \\
+        Ferrimagnet thickness
+            & $t_{\mathrm{FiM}}=0.4\ \mathrm{nm}$
+            & same as Zhu et al. (2020) \\
+        Drive parameter
+            & Spin-Hall angle $\theta_{\mathrm{SH}}=0.2$; field-like to
+              damping-like ratio $\beta$ is varied rather than fixed in the
+              baseline list
+            & STT efficiency $\eta$ is introduced but no numerical value is
+              stated \\
+        Compensation composition
+            & Not stated as a composition in the parameter block
+            & $x_{\mathrm{MC}}=0.23$;
+              $x_{\mathrm{AMC}}=0.21$ \\
+        \hline
+    \end{tabular}
+    \caption{Atomistic GdFeCo parameter sets retained in their native model
+    conventions~\cite{zhu2020terahertz,zhang2022spatially}.}
+    \label{tab:gdfeco-parameters}
+\end{table}
+
+The exchange values are deliberately not converted into a single common
+coefficient.  The 2020 value belongs to a one-dimensional nearest-neighbor
+Hamiltonian, while the 2022 values distinguish the chemical identity of each
+bond in a random two-dimensional alloy.  Their lattice topology and bond
+statistics must be retained with the numerical values when either set is used.
+
+\subsection{Noncollinear Antiferromagnet:
+\texorpdfstring{Mn$_3$Sn}{Mn3Sn}}
+
+The three-sublattice macrospin switching model of Xu et al. and the later
+spatially resolved atomistic domain-wall model use the same magnetic moment,
+DMI, anisotropy, damping, and spin-Hall angle, but different exchange
+coefficients~\cite{xu2024mn3sn,xu2025mn3sn-domain-wall}.  The values must
+therefore remain attached to their model and interaction convention.  Both
+Hamiltonians take positive $A$ to favor antiparallel alignment, and the
+crystalline easy axes point toward the nearest Sn atoms.  The atomistic
+domain-wall paper additionally states that its positive $D$ favors clockwise
+order.
+
+\begin{table}[htbp]
+    \centering
+    \small
+    \renewcommand{\arraystretch}{1.15}
+    \begin{tabular}{p{0.23\linewidth}p{0.29\linewidth}p{0.38\linewidth}}
+        \hline
+        Quantity & Value & Model scope or convention \\
+        \hline
+        Mn moment
+            & $m_s=3\mu_B$
+            & Per Mn site in both models \\
+        Nearest-neighbor exchange
+            & $A=17.53\ \mathrm{meV}$
+            & Three-sublattice macrospin switching model \\
+        Nearest-neighbor exchange
+            & $A=9\ \mathrm{meV}$
+            & Spatial atomistic domain-wall model \\
+        DMI coefficient
+            & $D=0.833\ \mathrm{meV}$
+            & Same-layer interaction in both models \\
+        Crystalline anisotropy
+            & $K=0.196\ \mathrm{meV}$
+            & Single-site Hamiltonian coefficient in both models \\
+        Gilbert damping
+            & $\alpha=0.003$
+            & Same in both fixed-length models \\
+        Unit-cell volume
+            & $V_{\mathrm{cell}}=0.3778\ \mathrm{nm^3}$
+            & Macrospin model; $M_s=6m_s/V_{\mathrm{cell}}
+              \approx4.42\times10^5\ \mathrm{A\,m^{-1}}$ \\
+        Mn$_3$Sn thickness
+            & $d=30\ \mathrm{nm}$
+            & Macrospin SOT model geometry \\
+        Time step
+            & $\Delta t=5\ \mathrm{fs}$
+            & Fourth-order Runge--Kutta macrospin integration \\
+        Nanoribbon length
+            & $5.7\,\mu\mathrm{m}$
+            & Spatial atomistic domain-wall model geometry \\
+        \hline
+    \end{tabular}
+    \caption{Mn$_3$Sn parameter sets used in the macrospin switching and
+    atomistic domain-wall models~\cite{xu2024mn3sn,xu2025mn3sn-domain-wall}.}
+    \label{tab:mn3sn-parameters}
+\end{table}
+
+The Mn$_3$Sn entries are not by themselves a complete crystallographic
+simulation specification: a reproducible atomistic calculation must also retain
+the source model's lattice, site mapping, bond list, DMI-vector orientations,
+boundary conditions, and pair-counting convention.
