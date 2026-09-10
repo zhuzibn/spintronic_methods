@@ -1,9 +1,12 @@
 \paragraph{LLGS form with field-like torque.}
 This macrospin equation is adapted from Eqs.~(1)--(4) of Kong et al., with the
-atom index removed~\cite{kong2026spatially}.
+atom index removed~\cite{kong2026spatially}.  It is written in the
+flux-density convention: $\vect{B}_{\mathrm{eff}}$ and the torque amplitudes
+are in tesla and are paired with $\gamma$ in
+$\mathrm{rad\,s^{-1}\,T^{-1}}$.
 \begin{align}
     \frac{\dd\mvec}{\dd t}
-    ={}& -\gamma\,\mvec\times\Heff
+    ={}& -\gamma\,\mvec\times\vect{B}_{\mathrm{eff}}
          + \alpha\,\mvec\times\frac{\dd\mvec}{\dd t}
          - \gamma\tau_{\mathrm{DLT}}\,
            \mvec\times\bigl(\mvec\times\vect{\sigma}\bigr)
@@ -18,8 +21,9 @@ The algebraically equivalent form follows the same source
 convention~\cite{kong2026spatially}.
 \begin{align}
     \bigl(1+\alpha^2\bigr)\frac{\dd\mvec}{\dd t}
-    ={}& -\gamma\,\mvec\times\Heff
-         - \alpha\gamma\,\mvec\times\bigl(\mvec\times\Heff\bigr)
+    ={}& -\gamma\,\mvec\times\vect{B}_{\mathrm{eff}}
+         - \alpha\gamma\,\mvec\times
+           \bigl(\mvec\times\vect{B}_{\mathrm{eff}}\bigr)
          \notag\\
        & + \alpha\gamma\tau_{\mathrm{DLT}}\,
            \mvec\times\vect{\sigma}
