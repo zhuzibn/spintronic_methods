@@ -1,21 +1,29 @@
-# Spin Dynamic Methods
+# Spintronic Methods
 
-This repository is a reusable, LaTeX-first collection of equations for spin
-Hamiltonians, magnetization dynamics, spin--orbit torque, and thermal stability.
-The `.tex` files are the source of truth. The complete `equations.pdf` is rebuilt,
-verified, and committed with each repository commit so the current rendered
-document is available on GitHub. Other generated PDF and SVG files are
-reproducible build artifacts and should not be committed.
+This repository is a reusable, LaTeX-first collection of illustrated concepts
+and equations for spin Hamiltonians, magnetization dynamics, spin--orbit torque,
+and thermal stability. The `.tex` files and editable figure SVGs are the source
+of truth. The complete
+`spintronic_methods.pdf` is rebuilt, verified, and committed with each repository
+commit so the current rendered document is available on GitHub. Editable figure
+SVGs and their LaTeX-ready PDF companions are also committed. Other generated PDF
+and SVG files are reproducible build artifacts and should not be committed.
 
 ## Repository layout
 
-- `equations.tex` — main document, package setup, and section order.
-- `equations.pdf` — tracked rendering of the complete document, rebuilt for each
-  commit.
+- `spintronic_methods.tex` — main document, package setup, and section order.
+- `spintronic_methods.pdf` — tracked rendering of the complete document, rebuilt
+  for each commit.
+- `sections/spintronics_concepts.tex` — illustrated spintronics concepts,
+  including A-type antiferromagnetic order.
+- `images/` — editable SVG figure sources and same-named PDF companions included
+  by the LaTeX document.
 - `macros.tex` — shared vector, derivative, and spintronics commands.
-- `references.tex` — numbered references cited by the equation sections.
+- `references.tex` — numbered references cited by the document sections.
 - `symbols.tex` — parameter definitions, physical constants, units, and field
   conventions.
+- `sections/symmetries.tex` — time-reversal, inversion, mirror, spin-rotation,
+  and combined parity--time symmetries for spin systems.
 - `sections/material_parameters.tex` — shared heavy-metal spin-Hall angles and
   literature- and implementation-sourced parameter sets for CoFeB, GdFeCo, and
   Mn$_3$Sn, with model and unit conventions.
@@ -44,19 +52,34 @@ run the SVG build script from WSL or another Bash environment.
 Run the build from the repository root:
 
 ```bash
-latexmk -pdf equations.tex
+latexmk -pdf spintronic_methods.tex
 ```
 
 If `latexmk` is unavailable, run `pdflatex` twice so that the table of contents and
 cross-references are resolved:
 
 ```bash
-pdflatex equations.tex
-pdflatex equations.tex
+pdflatex spintronic_methods.tex
+pdflatex spintronic_methods.tex
 ```
 
-The output is `equations.pdf`. Commit this complete-document PDF; auxiliary LaTeX
-files remain ignored by Git.
+The output is `spintronic_methods.pdf`. Commit this complete-document PDF;
+auxiliary LaTeX files remain ignored by Git.
+
+## Refresh a figure PDF
+
+Each figure keeps an editable SVG source and a same-named PDF companion that
+`pdflatex` can include without conversion. After editing an SVG, export its PDF
+companion with Inkscape, for example:
+
+```bash
+inkscape images/a-type-afm-stacking.svg \
+  --export-filename=images/a-type-afm-stacking.pdf
+```
+
+Commit the SVG and PDF together. The PDF companion is a required document input,
+not a disposable rendered output. Inkscape is needed only when refreshing a
+figure; building the complete document still requires only the LaTeX toolchain.
 
 ## Build one equation as an SVG
 
@@ -86,7 +109,7 @@ Both the temporary directory and SVG files under `sections/` are ignored by Git.
 2. If the equation also needs a standalone SVG, put the expression in a small
    fragment such as `sections/equation_name.tex` and include that fragment from the
    topic file.
-3. Add a new topic file to `equations.tex` with
+3. Add a new topic file to `spintronic_methods.tex` with
    `\input{sections/topic_name}`.
 4. Give equations that will be cross-referenced a stable, unique label such as
    `eq:llg-sot`.
@@ -127,14 +150,18 @@ Suggested entry structure:
 Commit the source and workflow files:
 
 - `.gitignore` and `README.md`;
-- `equations.tex`, `equations.pdf`, `macros.tex`, and `symbols.tex`;
-- source `.tex` files under `sections/`; and
+- `spintronic_methods.tex`, `spintronic_methods.pdf`, `macros.tex`, and
+  `symbols.tex`;
+- source `.tex` files under `sections/`;
+- editable SVG figures and their same-named PDF companions under `images/`; and
 - `sections/build-equation.sh`.
 
-Before every commit, rebuild `equations.pdf`, verify that the build succeeds, and
-include the PDF in the commit. Do not commit other reproducible outputs or
-intermediates, including LaTeX auxiliary and log files,
-`sections/.equation-build/`, or generated SVG files under `sections/`.
+Before every commit, rebuild `spintronic_methods.pdf`, verify that the build
+succeeds, and include the PDF in the commit. Do not commit other reproducible
+outputs or intermediates, including LaTeX auxiliary and log files,
+`sections/.equation-build/`, or generated SVG files under `sections/`. The PDF
+figure companions under `images/` are required inputs and are the exception to
+this generated-output rule.
 
 ## Maintenance rules
 
@@ -143,5 +170,10 @@ intermediates, including LaTeX auxiliary and log files,
 - Preserve the original source convention and document any conversion explicitly.
 - Replace placeholder source paragraphs with real citations before relying on an
   equation.
+- Keep a visible `Reference needed` warning beside provisionally unreferenced
+  user-supplied content and report each warning during handoff.
+- When requested knowledge has no approved source, include it provisionally with
+  a visible `Reference needed` warning instead of omitting it.
+- Regenerate and commit a figure's PDF companion whenever its SVG source changes.
 - Check dimensions and limiting cases before using an equation in code.
 - Keep generated outputs reproducible from the committed source and scripts.

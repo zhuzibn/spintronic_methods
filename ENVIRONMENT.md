@@ -1,17 +1,17 @@
 # Environment Requirements
 
 This file is the authoritative environment specification for building the
-equation library. `README.md` documents the build workflows and repository
-layout.
+Spintronic Methods library. `README.md` documents the build workflows and
+repository layout.
 
 ## Required capabilities
 
-Building `equations.pdf` requires:
+Building `spintronic_methods.pdf` requires:
 
 - `pdflatex`;
 - `kpsewhich` for deterministic package discovery; and
-- the LaTeX files `amsmath.sty`, `amssymb.sty`, `bm.sty`, `geometry.sty`, and
-  `hyperref.sty`.
+- the LaTeX files `amsmath.sty`, `amssymb.sty`, `bm.sty`, `geometry.sty`,
+  `graphicx.sty`, and `hyperref.sty`.
 
 Rendering standalone equation SVGs additionally requires:
 
@@ -23,10 +23,14 @@ Rendering standalone equation SVGs additionally requires:
 
 No minimum tool versions are currently specified.
 
-## Optional capability
+## Optional capabilities
 
 `latexmk` is recommended for complete-document builds. If it is unavailable,
 running `pdflatex` twice is the supported fallback.
+
+Inkscape is needed only to regenerate a PDF figure companion after editing its
+SVG source. It is not needed to build `spintronic_methods.pdf` from committed
+sources.
 
 ## Ubuntu and WSL setup
 
@@ -41,6 +45,13 @@ Install the optional build helper with:
 
 ```bash
 sudo apt-get install latexmk
+```
+
+To refresh PDF figure companions from their editable SVG sources, install the
+optional figure-export tool with:
+
+```bash
+sudo apt-get install inkscape
 ```
 
 ## Read-only verification
@@ -63,6 +74,7 @@ kpsewhich amsmath.sty
 kpsewhich amssymb.sty
 kpsewhich bm.sty
 kpsewhich geometry.sty
+kpsewhich graphicx.sty
 kpsewhich hyperref.sty
 kpsewhich standalone.cls
 ```

@@ -1,0 +1,207 @@
+\section{Symmetries in Spin Systems}
+
+A symmetry operation transforms the spatial coordinates, momenta, spins, and
+external fields of a system.  It is a symmetry of a Hamiltonian only when the
+transformed Hamiltonian describes the same physical system.  For a unitary
+operation $G$ this condition is
+\begin{equation}
+    G\mathcal{H}G^{-1}=\mathcal{H},
+    \label{eq:unitary-symmetry-condition}
+\end{equation}
+whereas time reversal is antiunitary and also complex-conjugates scalar
+coefficients.
+
+\paragraph{Source status.}
+\textbf{Reference needed.}  The general time-reversal and spatial-inversion
+operator rules in this section are included provisionally because no approved
+general reference is currently available.  The mirror rules are supported by
+the EE237 notes, the isotropic-exchange example by ASTRO, and the magnetic
+parity--time example by Zhang \emph{et al.}, as cited locally below.
+
+\subsection{Polar and Axial Vectors}
+
+Position $\mathbf{r}$, momentum $\mathbf{p}$, electric field $\mathbf{E}$, and
+charge-current density $\mathbf{J}$ are polar vectors.  Orbital angular momentum
+$\mathbf{L}=\mathbf{r}\times\mathbf{p}$, spin $\mathbf{S}$, magnetization
+$\mathbf{M}$, and magnetic field $\mathbf{B}$ are axial vectors.  For an
+orthogonal spatial transformation represented by $R$, the two vector classes
+transform as
+\begin{equation}
+    \mathbf{v}'=R\mathbf{v},
+    \qquad
+    \mathbf{a}'=(\det R)R\mathbf{a},
+    \label{eq:polar-axial-transformation}
+\end{equation}
+where $\mathbf{v}$ is polar and $\mathbf{a}$ is axial.  Thus they transform in
+the same way under proper rotations ($\det R=+1$) and differently under mirrors
+and inversion ($\det R=-1$)~\cite{ee237-week11}.
+
+The most frequently used transformations are summarized below.  The entries
+describe the vector attached to the spatial point after that point has been
+mapped by the operation.
+\begin{center}
+\renewcommand{\arraystretch}{1.25}
+\small
+\begin{tabular}{|p{0.14\linewidth}|p{0.22\linewidth}|p{0.27\linewidth}|p{0.19\linewidth}|}
+    \hline
+    Operation & $\mathbf{r},\mathbf{p}$ & $\mathbf{S},\mathbf{M}$ &
+    $\mathbf{E},\mathbf{B}$ \\
+    \hline
+    Time reversal $\mathcal{T}$ &
+    $\mathbf{r}\to\mathbf{r}$, $\mathbf{p}\to-\mathbf{p}$ &
+    $\mathbf{S},\mathbf{M}\to-\mathbf{S},-\mathbf{M}$ &
+    $\mathbf{E}\to\mathbf{E}$, $\mathbf{B}\to-\mathbf{B}$ \\
+    \hline
+    Inversion $\mathcal{P}$ &
+    $\mathbf{r},\mathbf{p}\to-\mathbf{r},-\mathbf{p}$ &
+    $\mathbf{S},\mathbf{M}\to\mathbf{S},\mathbf{M}$ &
+    $\mathbf{E}\to-\mathbf{E}$, $\mathbf{B}\to\mathbf{B}$ \\
+    \hline
+    Mirror $\mathcal{M}_{\mathbf{n}}$ &
+    $\mathbf{v}\to\mathbf{v}-2\mathbf{n}(\mathbf{n}\cdot\mathbf{v})$ &
+    $\mathbf{a}\to-\mathbf{a}+2\mathbf{n}(\mathbf{n}\cdot\mathbf{a})$ &
+    polar $\mathbf{E}$; axial $\mathbf{B}$ \\
+    \hline
+\end{tabular}
+\end{center}
+
+\subsection{Time-Reversal Symmetry}
+
+Time reversal changes $t\to-t$ and reverses momenta and angular momenta.  Spin
+is an intrinsic angular momentum, so
+\begin{equation}
+    \mathcal{T}\mathbf{S}\mathcal{T}^{-1}=-\mathbf{S},
+    \qquad
+    \mathcal{T}i\mathcal{T}^{-1}=-i.
+    \label{eq:time-reversal-spin}
+\end{equation}
+For a classical magnetization trajectory, the corresponding transformed
+trajectory is
+\begin{equation}
+    \mathbf{m}_{\mathcal{T}}(t)=-\mathbf{m}(-t).
+    \label{eq:time-reversed-magnetization}
+\end{equation}
+A magnetic state can therefore break time-reversal symmetry even when its
+nonmagnetic crystal structure does not.  A fixed applied magnetic field, a
+fixed current, damping, or another nonequilibrium drive must not be silently
+left unchanged when testing time reversal; these time-odd or irreversible
+ingredients generally prevent the driven equation from being
+time-reversal-invariant.
+
+\paragraph{Source status.}
+\textbf{Reference needed.}  Equations~\eqref{eq:time-reversal-spin} and
+\eqref{eq:time-reversed-magnetization}, and the general invariance statement
+above, still need an approved reference.
+
+\subsection{Parity or Spatial-Inversion Symmetry}
+
+Here parity means full spatial inversion,
+\begin{equation}
+    \mathcal{P}:\quad \mathbf{r}\to-\mathbf{r}.
+    \label{eq:spatial-inversion}
+\end{equation}
+Because spin is axial, inversion moves a spin to the inverted site without
+reversing its direction.  For a spin texture this gives
+\begin{equation}
+    \mathbf{S}_{\mathcal{P}}(\mathbf{r})
+    =\mathbf{S}(-\mathbf{r}).
+    \label{eq:inverted-spin-texture}
+\end{equation}
+The structure has inversion symmetry only when the inverted sites, chemical
+species, interactions, and spin pattern reproduce the original structure.
+This is distinct from particle-exchange symmetry.  In non-Hermitian coupled-mode
+models the symbol $\mathcal{P}$ may instead denote exchange of two subsystems;
+its meaning must therefore be stated explicitly.
+
+\paragraph{Source status.}
+\textbf{Reference needed.}  Equations~\eqref{eq:spatial-inversion} and
+\eqref{eq:inverted-spin-texture}, including the axial-spin convention under
+inversion, still need an approved general reference.
+
+\subsection{Mirror Symmetry}
+
+A mirror with unit normal $\mathbf{n}$ reverses the perpendicular component of
+a polar vector.  An axial vector behaves oppositely: its components parallel to
+the mirror plane reverse, while its perpendicular component is unchanged
+according to Eq.~\eqref{eq:polar-axial-transformation}~\cite{ee237-week11}.
+For the $xy$ mirror,
+\begin{equation}
+    (v_x,v_y,v_z)\to(v_x,v_y,-v_z),
+    \qquad
+    (S_x,S_y,S_z)\to(-S_x,-S_y,S_z).
+    \label{eq:xy-mirror-polar-axial}
+\end{equation}
+The transformed lattice and every axial spin must both be compared with the
+original magnetic structure.  A lattice may therefore possess a mirror plane
+that is broken by its magnetic order.
+
+\subsection{Spin-Rotation Symmetry}
+
+Spatial rotations move the lattice, whereas spin rotations act in spin space.
+For the isotropic exchange Hamiltonian used in ASTRO,
+\begin{equation}
+    \mathcal{H}_{\mathrm{ex}}
+    =\frac{1}{2}\sum_{i\ne j}J_{ij}\,\mathbf{S}_i\cdot\mathbf{S}_j,
+    \label{eq:symmetry-isotropic-exchange}
+\end{equation}
+a common spin rotation $R_s$ leaves every dot product unchanged:
+\begin{equation}
+    (R_s\mathbf{S}_i)\cdot(R_s\mathbf{S}_j)
+    =\mathbf{S}_i\cdot\mathbf{S}_j.
+    \label{eq:global-spin-rotation}
+\end{equation}
+The exchange term consequently has global spin-rotation symmetry when the
+couplings $J_{ij}$ do not depend on spin direction~\cite{astro-code}.  Magnetic
+anisotropy, Dzyaloshinskii--Moriya interaction, dipolar coupling, an applied
+field, or another spin--orbit-coupled term can reduce this continuous symmetry
+to the subset of joint spatial and spin operations that preserves the complete
+Hamiltonian.
+
+\subsection{Combined Parity--Time Symmetry in a Two-Sublattice Magnet}
+
+For the two-sublattice order parameters defined in
+Eq.~\eqref{eq:a-type-order-parameters}, suppose that inversion exchanges
+sublattices $A$ and $B$.  Since inversion does not reverse an axial spin,
+whereas time reversal does, their actions are
+\begin{equation}
+\begin{array}{c|cc}
+    & \mathbf{m} & \mathbf{n} \\
+    \hline
+    \mathcal{P} & \mathbf{m} & -\mathbf{n} \\
+    \mathcal{T} & -\mathbf{m} & -\mathbf{n} \\
+    \mathcal{P}\mathcal{T} & -\mathbf{m} & \mathbf{n}
+\end{array}
+    \label{eq:pt-order-parameters}
+\end{equation}
+Thus a compensated antiferromagnetic pattern can be invariant under the
+combined operation even when it is not invariant under $\mathcal{P}$ or
+$\mathcal{T}$ separately.  In a different use of parity, Zhang \emph{et al.}
+define $\mathcal{P}$ as interchange of two coupled ferrimagnetic layers and
+obtain parity--time-symmetric N\'eel-vector dynamics at angular-momentum
+compensation~\cite{zhang2024nonhermitian}.  These two meanings should not be
+conflated.
+
+\paragraph{Source status.}
+\textbf{Reference needed.}  Equation~\eqref{eq:pt-order-parameters} is a direct
+derivation from the provisional general transformation rules above.  The cited
+paper supports only the separate coupled-layer example.
+
+\subsection{Practical Symmetry Test}
+
+To test a proposed symmetry of a spin model:
+\begin{enumerate}
+    \item map every position and sublattice label;
+    \item transform spin as an axial vector and reverse it additionally under
+        time reversal;
+    \item transform external fields, currents, and boundary conditions;
+    \item rebuild every Hamiltonian or dynamical term with the transformed
+        quantities; and
+    \item compare the complete transformed model and magnetic pattern with the
+        originals.
+\end{enumerate}
+Checking only the atomic lattice or only the spin arrows is insufficient for a
+magnetic symmetry.
+
+\paragraph{Source status.}
+\textbf{Reference needed.}  The general five-step test is a provisional
+pedagogical synthesis and still needs an approved reference.
