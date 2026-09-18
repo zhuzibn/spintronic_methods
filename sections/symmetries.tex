@@ -1,4 +1,4 @@
-\section{Symmetries in Spin Systems}
+\section{Symmetry for Spintronics}
 
 A symmetry operation transforms the spatial coordinates, momenta, spins, and
 external fields of a system.  It is a symmetry of a Hamiltonian only when the
@@ -17,6 +17,258 @@ operator rules in this section are included provisionally because no approved
 general reference is currently available.  The mirror rules are supported by
 the EE237 notes, the isotropic-exchange example by ASTRO, and the magnetic
 parity--time example by Zhang \emph{et al.}, as cited locally below.
+
+\subsection{Spatial Transformations and Rotation Matrices}
+
+This section uses column vectors and active transformations: the vector moves
+while the coordinate axes remain fixed.  By the right-hand rule, a positive
+rotation about $z$ is counterclockwise when viewed from the positive $z$ axis.
+After a rotation through $\theta$, the Cartesian basis vectors become
+\begin{equation}
+    \begin{aligned}
+        R_z(\theta)\hat{\mathbf{x}}
+         & =\begin{pmatrix}\cos\theta\\ \sin\theta\\ 0\end{pmatrix}, \\
+        R_z(\theta)\hat{\mathbf{y}}
+         & =\begin{pmatrix}\cos(\frac{\pi}{2}+\theta) \\
+                \sin(\frac{\pi}{2}+\theta) \\0\end{pmatrix}
+        =\begin{pmatrix}-\sin\theta\\ \cos\theta\\0\end{pmatrix},    \\
+        R_z(\theta)\hat{\mathbf{z}}
+         & =\begin{pmatrix}0\\0\\1\end{pmatrix}.
+    \end{aligned}
+    \label{eq:z-axis-rotated-basis}
+\end{equation}
+To see why, note that a unit vector in the $xy$ plane at azimuth $\phi$ has
+Cartesian components $(\cos\phi,\sin\phi,0)^{\mathsf T}$.  Initially,
+$\hat{\mathbf{x}}$ and $\hat{\mathbf{y}}$ have azimuths $0$ and $\pi/2$,
+respectively.  An active rotation through $\theta$ adds $\theta$ to each
+azimuth, giving $\theta$ and $\pi/2+\theta$; the identities
+$\cos(\pi/2+\theta)=-\sin\theta$ and
+$\sin(\pi/2+\theta)=\cos\theta$ then give
+Eq.~\eqref{eq:z-axis-rotated-basis}.  The vector $\hat{\mathbf{z}}$ is
+unchanged because it lies along the rotation axis~\cite{ee237-week11}.
+Figure~\ref{fig:z-axis-rotated-basis-projections} shows the corresponding
+Cartesian projections.
+
+\begin{figure}[htbp]
+    \centering
+    \begin{tikzpicture}[>=stealth,scale=0.9]
+        \begin{scope}
+            \node[font=\bfseries] at (1.15,2.9)
+            {(a) $R_z(\theta)\hat{\mathbf{x}}$};
+            \draw[gray!35] (0,0) circle (2.15);
+            \draw[->] (-2.45,0) -- (2.55,0) node[right] {$x$};
+            \draw[->] (0,-0.35) -- (0,2.5) node[above] {$y$};
+            \draw[->,very thick,gray] (0,0) -- (2.15,0)
+            node[below right] {$\hat{\mathbf{x}}$};
+            \draw[dashed,red!65!black] (1.76,0) -- (1.76,1.23) -- (0,1.23);
+            \draw[->,very thick,red!75!black] (0,0) -- (1.76,1.23)
+            node[above right] {$R_z\hat{\mathbf{x}}$};
+            \draw[->,thick] (0.72,0) arc[start angle=0,end angle=35,radius=0.72];
+            \node at (0.91,0.27) {$\theta$};
+            \node[below] at (0.88,0) {$\cos\theta$};
+            \node[left] at (0,0.62) {$\sin\theta$};
+            \node[align=center] at (1.45,-0.72)
+            {$\bigl(\cos\theta,\sin\theta\bigr)$};
+        \end{scope}
+
+        \begin{scope}[xshift=7.2cm]
+            \node[font=\bfseries] at (-0.5,2.9)
+            {(b) $R_z(\theta)\hat{\mathbf{y}}$};
+            \draw[gray!35] (0,0) circle (2.15);
+            \draw[->] (-2.55,0) -- (2.45,0) node[right] {$x$};
+            \draw[->] (0,-0.35) -- (0,2.5) node[above] {$y$};
+            \draw[->,very thick,gray] (0,0) -- (0,2.15)
+            node[above right] {$\hat{\mathbf{y}}$};
+            \draw[dashed,blue!65!black] (-1.23,0) -- (-1.23,1.76) -- (0,1.76);
+            \draw[->,very thick,blue!75!black] (0,0) -- (-1.23,1.76)
+            node[above left] {$R_z\hat{\mathbf{y}}$};
+            \draw[->,thick] (0,0.72)
+            arc[start angle=90,end angle=125,radius=0.72];
+            \node at (-0.32,0.91) {$\theta$};
+            \node[below] at (-0.62,0) {$-\sin\theta$};
+            \node[right] at (0,0.88) {$\cos\theta$};
+            \node[align=center] at (-1.25,-0.72)
+            {$\bigl(-\sin\theta,\cos\theta\bigr)$};
+        \end{scope}
+    \end{tikzpicture}
+    \caption{Original schematic showing how the Cartesian components of the
+        actively rotated in-plane basis vectors are their projections onto the
+        fixed axes.  Both vectors rotate through the same angle $\theta$ and remain
+        perpendicular; $\hat{\mathbf{z}}$, directed out of the page, is unchanged.
+        The active-rotation convention follows the EE237 symmetry notes
+        ~\cite{ee237-week11}.}
+    \label{fig:z-axis-rotated-basis-projections}
+\end{figure}
+
+The columns of a transformation matrix are the transformed basis vectors.
+Therefore,
+\begin{equation}
+    R_z(\theta)=
+    \begin{pmatrix}
+        \cos\theta & -\sin\theta & 0 \\
+        \sin\theta & \cos\theta  & 0 \\
+        0          & 0           & 1
+    \end{pmatrix},
+    \qquad
+    R_z(\theta)\begin{pmatrix}x\\y\\z\end{pmatrix}
+    =\begin{pmatrix}
+        x\cos\theta-y\sin\theta \\
+        x\sin\theta+y\cos\theta \\
+        z
+    \end{pmatrix}.
+    \label{eq:z-axis-rotation-matrix}
+\end{equation}
+These conventions and the spatial transformation rules below follow the EE237
+symmetry notes~\cite{ee237-week11}.
+
+A passive rotation instead rotates the coordinate axes while leaving the
+physical vector fixed.  It is represented by the inverse active rotation,
+\begin{equation}
+    R_z^{-1}(\theta)=R_z^{\mathsf T}(\theta)=R_z(-\theta).
+    \label{eq:active-passive-z-rotation}
+\end{equation}
+Thus an unexplained sign difference between two rotation matrices often comes
+from using active and passive conventions, respectively~\cite{ee237-week11}.
+Figure~\ref{fig:active-passive-z-rotation} summarizes the two viewpoints.
+
+\begin{figure}[htbp]
+    \centering
+    \begin{tikzpicture}[>=stealth,scale=0.95]
+        \begin{scope}
+            \node[font=\bfseries] at (1.15,2.85) {(a) Active rotation};
+
+            % Fixed coordinate axes.
+            \draw[->] (-0.25,0) -- (2.75,0) node[right] {$x$};
+            \draw[->] (0,-0.25) -- (0,2.65) node[above] {$y$};
+
+            % Original and actively rotated basis vectors.
+            \draw[->,very thick,gray] (0,0) -- (1.55,0)
+            node[below=2pt] {$\hat{\mathbf{x}}$};
+            \draw[->,very thick,gray] (0,0) -- (0,1.55)
+            node[left=2pt] {$\hat{\mathbf{y}}$};
+            \draw[->,very thick,blue] (0,0) -- (35:2.05)
+            node[right] {$R_z\hat{\mathbf{x}}$};
+            \draw[->,very thick,red] (0,0) -- (125:2.05)
+            node[above left] {$R_z\hat{\mathbf{y}}$};
+            \draw[->,thick] (0.7,0) arc[start angle=0,end angle=35,radius=0.7];
+            \node at (0.9,0.28) {$+\theta$};
+            \node[anchor=east] at (-0.15,-0.48) {$+z:\ \odot$};
+            \node[align=center] at (1.35,-0.75)
+            {axes fixed\\vectors rotate};
+        \end{scope}
+
+        \begin{scope}[xshift=8cm]
+            \node[font=\bfseries] at (1.15,2.85) {(b) Passive rotation};
+
+            % Original axes and the rotated coordinate frame.
+            \draw[->,gray] (-0.25,0) -- (2.75,0) node[right] {$x$};
+            \draw[->,gray] (0,-0.25) -- (0,2.65) node[above] {$y$};
+            \draw[->,very thick,blue] (0,0) -- (35:2.55)
+            node[right] {$x'$};
+            \draw[->,very thick,blue] (0,0) -- (125:2.55)
+            node[above left] {$y'$};
+
+            % The physical vector remains fixed while the axes move.
+            \draw[->,very thick,red] (0,0) -- (70:2.25)
+            node[above right] {$\mathbf{v}$ fixed};
+            \draw[->,thick] (0.7,0) arc[start angle=0,end angle=35,radius=0.7];
+            \node at (0.9,0.28) {$+\theta$};
+            \node[anchor=east] at (-0.15,-0.48) {$+z:\ \odot$};
+            \node[align=center] at (1.35,-0.75)
+            {vector fixed\\axes rotate};
+        \end{scope}
+    \end{tikzpicture}
+    \caption{Original schematic comparing rotations about the $z$ axis.
+        (a) In an active rotation the coordinate axes remain fixed and the basis
+        vectors rotate counterclockwise through $+\theta$; their images form the
+        columns of $R_z(\theta)$.  (b) In a passive rotation the physical vector
+        remains fixed while the coordinate frame rotates through $+\theta$, so its
+        coordinates transform with $R_z(-\theta)=R_z^{\mathsf T}(\theta)$.  The
+        symbol $\odot$ denotes the positive $z$ direction out of the page.  The
+        convention follows the EE237 symmetry notes~\cite{ee237-week11}.}
+    \label{fig:active-passive-z-rotation}
+\end{figure}
+
+A spatial transformation that preserves lengths and angles is represented by
+an orthogonal matrix,
+\begin{equation}
+    R^{\mathsf T}R=I.
+    \label{eq:orthogonal-spatial-transformation}
+\end{equation}
+Taking determinants of both sides gives
+\begin{equation}
+    \det(R^{\mathsf T}R)=(\det R)^2=1,
+    \qquad \det R=\pm 1.
+    \label{eq:orthogonal-determinant}
+\end{equation}
+The sign distinguishes whether the transformation preserves or reverses the
+handedness of the coordinate system.  In three dimensions, a proper rotation
+preserves handedness and has $\det R=+1$.  A mirror reverses one direction and
+has $\det R=-1$.  Full spatial inversion is represented by $R=-I_3$ and also
+has $\det R=(-1)^3=-1$~\cite{ee237-week11}.
+
+For example, setting $\theta=90^\circ$ gives
+\begin{equation}
+    \hat{\mathbf{x}}\to\hat{\mathbf{y}},
+    \qquad
+    \hat{\mathbf{y}}\to-\hat{\mathbf{x}},
+    \qquad
+    \hat{\mathbf{z}}\to\hat{\mathbf{z}},
+    \label{eq:z90-basis-transformation}
+\end{equation}
+and hence
+\begin{equation}
+    R_z(90^\circ)=
+    \begin{pmatrix}
+        0 & -1 & 0 \\
+        1 & 0  & 0 \\
+        0 & 0  & 1
+    \end{pmatrix},
+    \qquad
+    R_z(90^\circ)
+    \begin{pmatrix}x\\y\\z\end{pmatrix}
+    =
+    \begin{pmatrix}-y\\x\\z\end{pmatrix}.
+    \label{eq:z90-rotation-example}
+\end{equation}
+Expanding the determinant along the first row,
+\begin{equation}
+    \det R_z(90^\circ)
+    =0-(-1)
+    \begin{vmatrix}
+        1 & 0 \\
+        0 & 1
+    \end{vmatrix}
+    +0
+    =+1.
+    \label{eq:z90-rotation-determinant}
+\end{equation}
+Thus the matrix is a proper rotation~\cite{ee237-week11}.
+
+For comparison, reflection across the $xy$ plane and full spatial inversion
+are represented by
+\begin{equation}
+    R_{xy}=\begin{pmatrix}
+        1 & 0 & 0 \\0&1&0\\0&0&-1
+    \end{pmatrix},
+    \qquad
+    R_{\mathrm{inv}}=\begin{pmatrix}
+        -1 & 0 & 0 \\0&-1&0\\0&0&-1
+    \end{pmatrix}.
+    \label{eq:mirror-inversion-matrices}
+\end{equation}
+Since the determinant of a diagonal matrix is the product of its diagonal
+entries,
+\begin{equation}
+    \det R_{xy}=(1)(1)(-1)=-1,
+    \qquad
+    \det R_{\mathrm{inv}}=(-1)(-1)(-1)=-1.
+    \label{eq:mirror-inversion-determinants}
+\end{equation}
+The inversion result depends on dimension: $\det(-I_n)=(-1)^n$.  In two
+dimensions, inversion therefore has determinant $+1$ and is equivalent to a
+$180^\circ$ rotation; in three dimensions it has determinant $-1$
+~\cite{ee237-week11}.
 
 \subsection{Polar and Axial Vectors}
 
@@ -40,30 +292,68 @@ The most frequently used transformations are summarized below.  The entries
 describe the vector attached to the spatial point after that point has been
 mapped by the operation.
 \begin{center}
-\renewcommand{\arraystretch}{1.25}
-\small
-\begin{tabular}{|p{0.14\linewidth}|p{0.22\linewidth}|p{0.27\linewidth}|p{0.19\linewidth}|}
-    \hline
-    Operation & $\mathbf{r},\mathbf{p}$ & $\mathbf{S},\mathbf{M}$ &
-    $\mathbf{E},\mathbf{B}$ \\
-    \hline
-    Time reversal $\mathcal{T}$ &
-    $\mathbf{r}\to\mathbf{r}$, $\mathbf{p}\to-\mathbf{p}$ &
-    $\mathbf{S},\mathbf{M}\to-\mathbf{S},-\mathbf{M}$ &
-    $\mathbf{E}\to\mathbf{E}$, $\mathbf{B}\to-\mathbf{B}$ \\
-    \hline
-    Inversion $\mathcal{P}$ &
-    $\mathbf{r},\mathbf{p}\to-\mathbf{r},-\mathbf{p}$ &
-    $\mathbf{S},\mathbf{M}\to\mathbf{S},\mathbf{M}$ &
-    $\mathbf{E}\to-\mathbf{E}$, $\mathbf{B}\to\mathbf{B}$ \\
-    \hline
-    Mirror $\mathcal{M}_{\mathbf{n}}$ &
-    $\mathbf{v}\to\mathbf{v}-2\mathbf{n}(\mathbf{n}\cdot\mathbf{v})$ &
-    $\mathbf{a}\to-\mathbf{a}+2\mathbf{n}(\mathbf{n}\cdot\mathbf{a})$ &
-    polar $\mathbf{E}$; axial $\mathbf{B}$ \\
-    \hline
-\end{tabular}
+    \renewcommand{\arraystretch}{1.25}
+    \small
+    \begin{tabular}{|p{0.14\linewidth}|p{0.22\linewidth}|p{0.27\linewidth}|p{0.19\linewidth}|}
+        \hline
+        Operation                                                         & $\mathbf{r},\mathbf{p}$ & $\mathbf{S},\mathbf{M}$ &
+        $\mathbf{E},\mathbf{B}$                                                                                                 \\
+        \hline
+        Time reversal $\mathcal{T}$                                       &
+        $\mathbf{r}\to\mathbf{r}$, $\mathbf{p}\to-\mathbf{p}$             &
+        $\mathbf{S},\mathbf{M}\to-\mathbf{S},-\mathbf{M}$                 &
+        $\mathbf{E}\to\mathbf{E}$, $\mathbf{B}\to-\mathbf{B}$                                                                   \\
+        \hline
+        Inversion $\mathcal{P}$                                           &
+        $\mathbf{r},\mathbf{p}\to-\mathbf{r},-\mathbf{p}$                 &
+        $\mathbf{S},\mathbf{M}\to\mathbf{S},\mathbf{M}$                   &
+        $\mathbf{E}\to-\mathbf{E}$, $\mathbf{B}\to\mathbf{B}$                                                                   \\
+        \hline
+        Mirror $\mathcal{M}_{\mathbf{n}}$                                 &
+        $\mathbf{v}\to\mathbf{v}-2\mathbf{n}(\mathbf{n}\cdot\mathbf{v})$  &
+        $\mathbf{a}\to-\mathbf{a}+2\mathbf{n}(\mathbf{n}\cdot\mathbf{a})$ &
+        polar $\mathbf{E}$; axial $\mathbf{B}$                                                                                  \\
+        \hline
+    \end{tabular}
 \end{center}
+
+Figure~\ref{fig:polar-axial-improper-transformations} visualizes the different
+sign rules for polar and axial vectors under spatial inversion.
+
+\begin{figure}[htbp]
+    \centering
+    \begin{tikzpicture}[>=stealth,scale=0.88]
+        \begin{scope}
+            \node[font=\bfseries] at (2.35,1.85)
+            {Inversion $\mathcal{P}$};
+
+            \node at (1.05,1.35) {polar};
+            \fill (1.05,0) circle (1.5pt) node[below right] {$O$};
+            \draw[dashed,gray] (0.05,-1.0) -- (2.05,1.0);
+            \fill (1.65,0.6) circle (1.5pt) node[below right] {$\mathbf{r}$};
+            \fill (0.45,-0.6) circle (1.5pt) node[above left] {$-\mathbf{r}$};
+            \draw[->,very thick,blue] (1.65,0.6) -- (2.25,1.2)
+            node[right] {$\mathbf{v}$};
+            \draw[->,very thick,blue] (0.45,-0.6) -- (-0.15,-1.2)
+            node[left] {$-\mathbf{v}$};
+
+            \node at (3.75,1.35) {axial};
+            \fill (3.75,0) circle (1.5pt) node[below right] {$O$};
+            \draw[dashed,gray] (2.75,-1.0) -- (4.75,1.0);
+            \fill (4.35,0.6) circle (1.5pt) node[below right] {$\mathbf{r}$};
+            \fill (3.15,-0.6) circle (1.5pt) node[above left] {$-\mathbf{r}$};
+            \draw[->,very thick,red] (4.35,0.6) -- (4.95,1.2)
+            node[right] {$\mathbf{a}$};
+            \draw[->,very thick,red] (3.15,-0.6) -- (3.75,0)
+            node[right] {$\mathbf{a}$};
+        \end{scope}
+    \end{tikzpicture}
+    \caption{Original schematic of spatial inversion.  Full inversion moves
+        both vectors from $\mathbf r$ to $-\mathbf r$, reverses the polar vector,
+        and preserves the axial-vector direction.  The conventions follow the
+        EE237 symmetry notes~\cite{ee237-week11}.}
+    \label{fig:polar-axial-improper-transformations}
+\end{figure}
 
 \subsection{Time-Reversal Symmetry}
 
@@ -74,6 +364,33 @@ is an intrinsic angular momentum, so
     \qquad
     \mathcal{T}i\mathcal{T}^{-1}=-i.
     \label{eq:time-reversal-spin}
+\end{equation}
+Here $\mathcal{T}$ is the time-reversal operator, not the superscript
+$\mathsf{T}$ used for a matrix transpose.  Time reversal is antiunitary, so it
+complex-conjugates every scalar coefficient:
+\begin{equation}
+    \mathcal{T}\bigl(c\lvert\psi\rangle\bigr)
+    =c^*\mathcal{T}\lvert\psi\rangle.
+    \label{eq:time-reversal-antilinearity}
+\end{equation}
+Taking $c=i$, for which $i^*=-i$, and applying the operator product to an
+arbitrary state $\lvert\phi\rangle$ gives
+\begin{equation}
+    \mathcal{T}i\mathcal{T}^{-1}\lvert\phi\rangle
+    =-i\mathcal{T}\mathcal{T}^{-1}\lvert\phi\rangle
+    =-i\lvert\phi\rangle.
+    \label{eq:time-reversal-imaginary-unit}
+\end{equation}
+Because this holds for every state,
+$\mathcal{T}i\mathcal{T}^{-1}=-i$.  Thus the identity expresses complex
+conjugation by time reversal; it is not an ordinary matrix sign change.  For
+example, in the position representation $\mathbf{p}=-i\hbar\boldsymbol{\nabla}$,
+so complex conjugation reverses momentum:
+\begin{equation}
+    \mathcal{T}\mathbf{p}\mathcal{T}^{-1}
+    =i\hbar\boldsymbol{\nabla}
+    =-\mathbf{p}.
+    \label{eq:time-reversal-momentum}
 \end{equation}
 For a classical magnetization trajectory, the corresponding transformed
 trajectory is
@@ -89,9 +406,9 @@ ingredients generally prevent the driven equation from being
 time-reversal-invariant.
 
 \paragraph{Source status.}
-\textbf{Reference needed.}  Equations~\eqref{eq:time-reversal-spin} and
-\eqref{eq:time-reversed-magnetization}, and the general invariance statement
-above, still need an approved reference.
+\textbf{Reference needed.}  Equations~\eqref{eq:time-reversal-spin}--
+\eqref{eq:time-reversed-magnetization}, including the antiunitary derivation
+and the general invariance statement above, still need an approved reference.
 
 \subsection{Parity or Spatial-Inversion Symmetry}
 
@@ -100,23 +417,48 @@ Here parity means full spatial inversion,
     \mathcal{P}:\quad \mathbf{r}\to-\mathbf{r}.
     \label{eq:spatial-inversion}
 \end{equation}
-Because spin is axial, inversion moves a spin to the inverted site without
-reversing its direction.  For a spin texture this gives
+For inversion, $R_{\mathrm{inv}}=-I_3$ and $\det R_{\mathrm{inv}}=-1$.
+Substitution into the axial-vector rule in
+Eq.~\eqref{eq:polar-axial-transformation} gives
 \begin{equation}
-    \mathbf{S}_{\mathcal{P}}(\mathbf{r})
-    =\mathbf{S}(-\mathbf{r}).
+    \mathbf{a}'=(\det R_{\mathrm{inv}})R_{\mathrm{inv}}\mathbf{a}
+    =(-1)(-I_3)\mathbf{a}=\mathbf{a}.
+    \label{eq:axial-vector-under-inversion}
+\end{equation}
+Consequently, the shorthand
+$\mathbf{S},\mathbf{M}\to\mathbf{S},\mathbf{M}$ means that inversion does
+not reverse the components or direction of these axial vectors.  It does move
+each vector from its original position to the inversion-related position:
+\begin{equation}
+    \bigl(\mathbf{r},\mathbf{S}(\mathbf{r}),\mathbf{M}(\mathbf{r})\bigr)
+    \to
+    \bigl(-\mathbf{r},\mathbf{S}(\mathbf{r}),\mathbf{M}(\mathbf{r})\bigr).
+    \label{eq:axial-vectors-moved-by-inversion}
+\end{equation}
+Equivalently, when the transformed textures are written as functions of the
+coordinate $\mathbf{r}$,
+\begin{equation}
+    \mathbf{S}_{\mathcal{P}}(\mathbf{r})=\mathbf{S}(-\mathbf{r}),
+    \qquad
+    \mathbf{M}_{\mathcal{P}}(\mathbf{r})=\mathbf{M}(-\mathbf{r}).
     \label{eq:inverted-spin-texture}
 \end{equation}
-The structure has inversion symmetry only when the inverted sites, chemical
-species, interactions, and spin pattern reproduce the original structure.
+This transformation law alone does not imply
+$\mathbf{S}(\mathbf{r})=\mathbf{S}(-\mathbf{r})$ or
+$\mathbf{M}(\mathbf{r})=\mathbf{M}(-\mathbf{r})$.  Those equalities hold only
+when the complete magnetic texture is itself invariant under inversion.  More
+generally, the structure has inversion symmetry only when the inverted sites,
+chemical species, interactions, and spin pattern reproduce the original
+structure.
 This is distinct from particle-exchange symmetry.  In non-Hermitian coupled-mode
 models the symbol $\mathcal{P}$ may instead denote exchange of two subsystems;
 its meaning must therefore be stated explicitly.
 
 \paragraph{Source status.}
 \textbf{Reference needed.}  Equations~\eqref{eq:spatial-inversion} and
-\eqref{eq:inverted-spin-texture}, including the axial-spin convention under
-inversion, still need an approved general reference.
+\eqref{eq:axial-vector-under-inversion}--\eqref{eq:inverted-spin-texture},
+including the axial-spin convention under inversion, still need an approved
+general reference.
 
 \subsection{Mirror Symmetry}
 
@@ -164,13 +506,13 @@ Eq.~\eqref{eq:a-type-order-parameters}, suppose that inversion exchanges
 sublattices $A$ and $B$.  Since inversion does not reverse an axial spin,
 whereas time reversal does, their actions are
 \begin{equation}
-\begin{array}{c|cc}
-    & \mathbf{m} & \mathbf{n} \\
-    \hline
-    \mathcal{P} & \mathbf{m} & -\mathbf{n} \\
-    \mathcal{T} & -\mathbf{m} & -\mathbf{n} \\
-    \mathcal{P}\mathcal{T} & -\mathbf{m} & \mathbf{n}
-\end{array}
+    \begin{array}{c|cc}
+                               & \mathbf{m}  & \mathbf{n}  \\
+        \hline
+        \mathcal{P}            & \mathbf{m}  & -\mathbf{n} \\
+        \mathcal{T}            & -\mathbf{m} & -\mathbf{n} \\
+        \mathcal{P}\mathcal{T} & -\mathbf{m} & \mathbf{n}
+    \end{array}
     \label{eq:pt-order-parameters}
 \end{equation}
 Thus a compensated antiferromagnetic pattern can be invariant under the
@@ -186,18 +528,340 @@ conflated.
 derivation from the provisional general transformation rules above.  The cited
 paper supports only the separate coupled-layer example.
 
+\subsection{Mini-Tutorial: From $\mathcal{P}$, $\mathcal{T}$, and
+    $\mathcal{PT}$ to Spintronic Effects}
+
+The useful question is not merely whether a crystal ``has symmetry.''  For a
+candidate response
+\begin{equation}
+    O_i=\chi_{ij}F_j,
+    \label{eq:symmetry-linear-response}
+\end{equation}
+one must transform the observable $O$, the drive $F$, the magnetic order, and
+the complete device geometry.  A symmetry of the driven structure is allowed
+to keep only tensor components that reproduce Eq.~\eqref{eq:symmetry-linear-response}
+after the transformation.  Symmetry therefore decides which components may be
+nonzero, but not their magnitude or microscopic origin~\cite{manchon2019sot,
+    zelezny2017sot,liu2020twod-sot}.
+
+The signatures needed below follow directly from the polar/axial distinction:
+\begin{center}
+    \renewcommand{\arraystretch}{1.18}
+    \small
+    \begin{tabular}{|p{0.25\linewidth}|p{0.16\linewidth}|p{0.16\linewidth}|p{0.31\linewidth}|}
+        \hline
+        Quantity                                               & $\mathcal{P}$ & $\mathcal{T}$ & Character      \\
+        \hline
+        $\mathbf{k},\mathbf{E},\mathbf{j}$                     & odd           &
+        $\mathbf{k},\mathbf{j}$ odd; $\mathbf{E}$ even         & polar                                          \\
+        \hline
+        $\mathbf{S},\boldsymbol{\sigma},\mathbf{M},\mathbf{B}$ & even          & odd           & axial          \\
+        \hline
+        spin current $Q_i^{\,a}\sim v_iS_a$                    & odd           & even          &
+        polar flow index $i$, axial spin index $a$                                                              \\
+        \hline
+        Hall vector $\mathbf{h}$ in $\mathbf{j}_{\mathrm H}=\mathbf{h}\times\mathbf{E}$
+                                                               & even          & odd           & axial response \\
+        \hline
+    \end{tabular}
+\end{center}
+The electric field is time-reversal even, whereas the dissipative current that
+it produces is time-reversal odd.  A dc transport coefficient must therefore
+be interpreted as a nonequilibrium response, not as a new equilibrium order
+parameter.
+
+\paragraph{Band-degeneracy checkpoint.}
+Both $\mathcal{P}$ and $\mathcal{T}$ reverse $\mathbf{k}$, so their product
+leaves each crystal momentum fixed.  For spin-$1/2$ electrons with
+$(\mathcal{PT})^2=-1$, $\mathcal{PT}$ produces a Kramers-like partner at the
+same $\mathbf{k}$.  Consequently, a $\mathcal{PT}$-symmetric collinear magnet
+cannot have a same-$\mathbf{k}$ spin splitting.  Breaking $\mathcal{PT}$ is
+necessary for such a splitting, but it is not sufficient: another unitary or
+antiunitary symmetry may still protect degeneracy~\cite{smejkal2022altermagnet,
+    jungwirth2026altermagnet-symmetry}.
+
+\paragraph{Source status.}
+\textbf{Reference needed.}  The response-tensor and $\mathcal{PT}$ band-
+degeneracy statements above are supported by the cited local reviews, but none
+of those reviews belongs to the project's approved reference classes.  They
+are retained provisionally rather than replaced by a weaker indirect source.
+
+\subsubsection{Rashba Spin--Orbit Coupling: Break $\mathcal{P}$, Keep
+    $\mathcal{T}$}
+
+For an interface or polar crystal with polar axis $\mathbf{n}$, the leading
+isotropic momentum-linear term is
+\begin{equation}
+    \mathcal{H}_{\mathrm R}
+    =\alpha_{\mathrm R}(\mathbf{n}\times\mathbf{k})\cdot
+    \boldsymbol{\sigma}.
+    \label{eq:symmetry-rashba}
+\end{equation}
+Time reversal changes both $\mathbf{k}$ and $\boldsymbol{\sigma}$ in sign, so
+Eq.~\eqref{eq:symmetry-rashba} is $\mathcal{T}$ even.  Inversion changes
+$\mathbf{k}$ but not the axial spin; moreover an inversion-symmetric crystal
+cannot possess the fixed polar axis $\mathbf{n}$.  Thus a nonzero Rashba
+coefficient requires inversion asymmetry, while time reversal may remain a
+symmetry.  The eigenvalues
+\begin{equation}
+    \varepsilon_{\pm}(\mathbf{k})
+    =\varepsilon_0(\mathbf{k})
+    \pm\alpha_{\mathrm R}\lvert\mathbf{n}\times\mathbf{k}\rvert
+    \label{eq:rashba-splitting}
+\end{equation}
+are split at a general $\mathbf{k}$ but obey
+$\varepsilon_{+}(\mathbf{k})=\varepsilon_{-}(-\mathbf{k})$, as required by
+$\mathcal{T}$~\cite{manchon2015rashba}.
+
+\paragraph{Source status.}
+\textbf{Reference needed.}  Equations~\eqref{eq:symmetry-rashba} and
+\eqref{eq:rashba-splitting} still need an approved project reference.
+
+\subsubsection{Dzyaloshinskii--Moriya Interaction: Break Bond-Center
+    Inversion}
+
+For one bond,
+\begin{equation}
+    \mathcal{H}_{ij}^{\mathrm{DMI}}
+    =-\mathbf{D}_{ij}\cdot(\mathbf{S}_i\times\mathbf{S}_j).
+    \label{eq:symmetry-dmi-bond}
+\end{equation}
+The directed bond and DMI-vector convention are shown in
+Fig.~\ref{fig:atomistic-bond-interactions}.
+If inversion about the bond midpoint exchanges $i$ and $j$, the axial spins do
+not reverse but their ordered cross product does:
+\begin{equation}
+    \mathcal{P}:\quad
+    \mathbf{S}_i\times\mathbf{S}_j
+    \longrightarrow
+    \mathbf{S}_j\times\mathbf{S}_i
+    =-\mathbf{S}_i\times\mathbf{S}_j.
+\end{equation}
+Invariance would then require $\mathbf{D}_{ij}=-\mathbf{D}_{ij}$, hence
+$\mathbf{D}_{ij}=0$.  DMI therefore needs the relevant local bond-center
+inversion to be absent; the whole crystal need not be globally polar.  Under
+time reversal both spins change sign, leaving their cross product and DMI
+unchanged.  DMI is consequently compatible with $\mathcal{T}$ and is selected
+primarily by spatial symmetry~\cite{astro-code,kong2026spatially}.
+
+\subsubsection{Spin Hall and Anomalous Hall Effects: Similar Geometry,
+    Different $\mathcal{T}$ Requirement}
+
+In an isotropic spin Hall material the leading response can be written
+\begin{equation}
+    Q_i^{\,a}=\sigma_{\mathrm{SH}}\epsilon_{iaj}E_j.
+    \label{eq:symmetry-spin-hall}
+\end{equation}
+Both $Q_i^{\,a}$ and $E_j$ are odd under inversion, while both are even under
+time reversal.  Neither $\mathcal{P}$ nor $\mathcal{T}$ must therefore be
+broken for the spin Hall effect; crystal mirrors and rotations only restrict
+the allowed tensor components.  This is why a centrosymmetric nonmagnetic
+heavy metal can generate a transverse spin current~\cite{sot-stt-compact-model,
+    liu2012ta-spin-hall,pai2012w-spin-hall,davidson2020spin-currents}.
+
+For the anomalous Hall effect,
+\begin{equation}
+    \mathbf{j}_{\mathrm{AH}}=\mathbf{h}\times\mathbf{E},
+    \label{eq:symmetry-anomalous-hall}
+\end{equation}
+where the Hall vector $\mathbf{h}$ is axial and time-reversal odd.  Inversion
+does not forbid it, but $\mathcal{T}$ does.  Because $\mathcal{PT}$ also changes
+$\mathbf{h}$ in sign while leaving its spatial point fixed, $\mathcal{PT}$
+forbids the anomalous Hall vector.  Conversely, breaking $\mathcal{T}$ and
+$\mathcal{PT}$ is only a necessary screen: a mirror, rotation, or another
+antiunitary symmetry can still force a particular component of $\mathbf{h}$
+to vanish.  Compensated magnets can therefore have an anomalous Hall effect
+without a net moment when their magnetic point group allows a time-odd axial
+vector~\cite{smejkal2022ahe}.
+
+\paragraph{Source status.}
+\textbf{Reference needed.}  The anomalous-Hall symmetry criterion and
+Eq.~\eqref{eq:symmetry-anomalous-hall} still need an approved project
+reference.  Equation~\eqref{eq:symmetry-spin-hall} is supported by the cited
+approved compact-model repository and the experimental references already
+used by this project.
+
+\subsubsection{Edelstein Effect: Uniform Versus Staggered Spin Accumulation}
+
+The Edelstein or inverse spin-galvanic response is
+\begin{equation}
+    S_i=\chi_{ij}E_j.
+    \label{eq:symmetry-edelstein}
+\end{equation}
+Spin is inversion even and the electric field is inversion odd, so a global
+uniform tensor $\chi_{ij}$ must vanish when inversion is a symmetry.  In a
+polar film with approximate $C_{\infty v}$ symmetry, the leading form is
+\begin{equation}
+    \mathbf{S}=\chi_{\mathrm E}\,\mathbf{n}\times\mathbf{E}.
+    \label{eq:edelstein-isotropic}
+\end{equation}
+The underlying material may preserve time reversal: the spin density is a
+nonequilibrium, current-odd response rather than an equilibrium magnetization.
+
+Global inversion does not rule out a \emph{staggered} Edelstein effect.  If
+inversion exchanges two locally noncentrosymmetric magnetic sites, symmetry
+can impose
+\begin{equation}
+    \mathbf{S}_A=-\mathbf{S}_B,
+    \label{eq:staggered-edelstein}
+\end{equation}
+so that the unit-cell-average spin vanishes while a N\'eel-order-effective
+staggered field survives.  This is the key distinction between global and
+local inversion asymmetry~\cite{zelezny2017sot,watanabe2018afm-switching,
+    manchon2019sot}.
+
+\paragraph{Source status.}
+\textbf{Reference needed.}  The uniform and staggered Edelstein equations need
+an approved project reference.
+
+\subsubsection{Spin--Orbit Torque: Convert a Symmetry-Allowed Spin Response
+    into Torque}
+
+Once a current produces a spin polarization $\boldsymbol{\zeta}$, exchange
+coupling to a magnetic order permits the two familiar lowest-order torques
+\begin{equation}
+    \boldsymbol{\tau}_{\mathrm{SOT}}
+    =\tau_{\mathrm{FL}}\,\mathbf{m}\times\boldsymbol{\zeta}
+    +\tau_{\mathrm{DL}}\,\mathbf{m}\times
+    (\mathbf{m}\times\boldsymbol{\zeta}).
+    \label{eq:symmetry-sot}
+\end{equation}
+The shared device axes and the two torque vector factors are shown in
+Fig.~\ref{fig:sot-llgs-geometry}.
+The source symmetry determines $\boldsymbol{\zeta}$: a conventional isotropic
+bilayer gives $\boldsymbol{\zeta}\parallel\mathbf{n}\times\mathbf{E}$,
+whereas lower crystal symmetry allows additional components.  Field-like and
+damping-like angular forms do not uniquely identify Rashba/Edelstein and spin
+Hall microscopic mechanisms, because either mechanism can contribute to both
+forms~\cite{manchon2019sot,zhang2024revisiting,xu2023field-free-afm}.
+
+A single vertical mirror illustrates how an unconventional component appears.
+Take the surviving mirror to be the $yz$ plane.  Then $E_x\to-E_x$, while the
+axial component $\zeta_z\to-\zeta_z$, so $\zeta_z\propto E_x$ is allowed.  For
+current inside the mirror plane, $E_y\to E_y$ but $\zeta_z\to-\zeta_z$, so the
+same response is forbidden.  This is the symmetry logic behind the
+current-direction-dependent out-of-plane torque in WTe$_2$/ferromagnet
+bilayers~\cite{ee237-week11,macneill2017wte2,liu2020twod-sot}.
+
+For antiferromagnets, global inversion can forbid the uniform torque while
+local inversion asymmetry permits opposite sublattice torques.  Whether the
+even or odd response is staggered depends on the operation that exchanges the
+sublattices; local noncentrosymmetry is necessary but not sufficient, so the
+full site and magnetic point groups must be checked~\cite{zelezny2017sot,
+    watanabe2018afm-switching}.
+
+\subsubsection{Spin-Transfer Torque: No Intrinsic Inversion-Breaking
+    Requirement}
+
+Spin-transfer torque transfers angular momentum from a spin-polarized current
+whose polarization $\mathbf{p}$ is prepared by a magnetic polarizer, magnetic
+texture, or spin filter:
+\begin{equation}
+    \boldsymbol{\tau}_{\mathrm{STT}}
+    =u_{\mathrm{DL}}\,\mathbf{m}\times(\mathbf{p}\times\mathbf{m})
+    +u_{\mathrm{FL}}\,\mathbf{m}\times\mathbf{p}.
+    \label{eq:symmetry-stt}
+\end{equation}
+Unlike Rashba SOC, DMI, or a uniform Edelstein response, conventional STT does
+not require spin--orbit coupling or broken crystal inversion.  Its essential
+ingredients are a nonequilibrium spin flux and a noncollinear receiving
+magnetization.  Magnetic order or spin filtering supplies the time-reversal-
+odd polarization $\mathbf{p}$, while reversing the current reverses the
+angular-momentum flux.  Device geometry can of course break inversion, but
+that is not the microscopic selection rule for STT~\cite{sot-stt-compact-model,
+    yuan2023thermal,zhu2019voltage}.
+
+\subsubsection{Altermagnetic Spin Splitting: Break $\mathcal{T}$ Without
+    $\mathcal{PT}$ Degeneracy}
+
+In a conventional collinear antiferromagnet, opposite-spin sublattices are
+often related by inversion or a translation.  A $\mathcal{PT}$ symmetry then
+protects same-$\mathbf{k}$ degeneracy directly.  In the nonrelativistic spin
+group, a spin flip combined with a sublattice translation can likewise make
+the two spin channels degenerate throughout the Brillouin zone; after
+spin--orbit coupling is included, translation--time-reversal alone generally
+protects degeneracy only at selected momenta.  An altermagnet instead relates
+the opposite-spin sublattices by a proper or improper crystal rotation
+$\mathcal{R}$, but not by a translation or inversion based spin-group
+operation that would restore general same-$\mathbf{k}$ degeneracy.
+Schematically,
+\begin{equation}
+    \varepsilon_{\uparrow}(\mathbf{k})
+    =\varepsilon_{\downarrow}(\mathcal{R}\mathbf{k}),
+    \qquad
+    \varepsilon_{\uparrow}(\mathbf{k})
+    \ne\varepsilon_{\downarrow}(\mathbf{k})
+    \quad\text{at a general }\mathbf{k}.
+    \label{eq:altermagnetic-splitting}
+\end{equation}
+The rotation redistributes the two spin channels so that the net moment can
+still compensate.  The resulting even-parity $d$-, $g$-, or $i$-wave spin
+splitting is nonrelativistic and does not require spin--orbit coupling;
+spin--orbit coupling subsequently modifies nodal degeneracies and enables
+additional Berry-curvature responses.  Inversion may still exist as an
+operation within a same-spin sector, but it must not exchange the two
+opposite-spin sublattices in the way that restores $\mathcal{PT}$ degeneracy
+~\cite{smejkal2022altermagnet,smejkal2022altermagnet-landscape,
+    jungwirth2026altermagnet-symmetry}.
+
+\paragraph{Source status.}
+\textbf{Reference needed.}  Equation~\eqref{eq:altermagnetic-splitting} and the
+altermagnetic symmetry classification still need an approved project
+reference.
+
+\subsubsection{Selection-Rule Summary}
+
+\begin{center}
+    \renewcommand{\arraystretch}{1.2}
+    \small
+    \begin{tabular}{|p{0.18\linewidth}|p{0.31\linewidth}|p{0.38\linewidth}|}
+        \hline
+        Effect                  & Spatial-symmetry gate                                                                                          & Time-reversal / combined-symmetry gate \\
+        \hline
+        Rashba SOC              & Global inversion broken; a polar axis is allowed                                                               &
+        $\mathcal{T}$ may be preserved; $\mathcal{PT}$ degeneracy is absent                                                                                                               \\
+        \hline
+        DMI                     & Inversion absent at the relevant bond midpoint                                                                 &
+        $\mathcal{T}$ may be preserved                                                                                                                                                    \\
+        \hline
+        Spin Hall effect        & $\mathcal{P}$ may be preserved; point group selects tensor components                                          &
+        $\mathcal{T}$ may be preserved                                                                                                                                                    \\
+        \hline
+        Anomalous Hall effect   & $\mathcal{P}$ may be preserved; remaining mirrors and rotations select $\mathbf{h}$                            &
+        $\mathcal{T}$ broken and no $\mathcal{PT}$ or other symmetry that reverses the allowed Hall vector                                                                                \\
+        \hline
+        Edelstein effect        & Uniform response needs global inversion breaking; staggered response needs local inversion breaking            &
+        Equilibrium $\mathcal{T}$ breaking is not required for the driven spin accumulation                                                                                               \\
+        \hline
+        SOT                     & Spin-source and device point group must allow $\boldsymbol{\zeta}$; local asymmetry can give staggered AFM SOT &
+        Magnetic target breaks $\mathcal{T}$; torque parity alone does not identify the source mechanism                                                                                  \\
+        \hline
+        STT                     & No intrinsic $\mathcal{P}$-breaking or SOC requirement                                                         &
+        Requires a nonequilibrium spin flux; magnetic polarizer/filter supplies time-odd $\mathbf{p}$                                                                                     \\
+        \hline
+        Altermagnetic splitting & Opposite-spin sublattices rotation-related, not inversion- or translation-related                              &
+        $\mathcal{T}$ broken; no $\mathcal{PT}$ or translation/inversion based spin-group symmetry that enforces general same-$\mathbf{k}$ degeneracy                                     \\
+        \hline
+    \end{tabular}
+\end{center}
+
+This table gives necessary symmetry gates, not sufficient material-design
+conditions.  After passing the gate, band filling, spin--orbit strength,
+scattering, interfaces, magnetic domains, and device geometry determine
+whether the effect is measurable or useful.
+
 \subsection{Practical Symmetry Test}
 
 To test a proposed symmetry of a spin model:
 \begin{enumerate}
     \item map every position and sublattice label;
     \item transform spin as an axial vector and reverse it additionally under
-        time reversal;
+          time reversal;
     \item transform external fields, currents, and boundary conditions;
     \item rebuild every Hamiltonian or dynamical term with the transformed
-        quantities; and
+          quantities; and
     \item compare the complete transformed model and magnetic pattern with the
-        originals.
+          originals.
 \end{enumerate}
 Checking only the atomic lattice or only the spin arrows is insufficient for a
 magnetic symmetry.

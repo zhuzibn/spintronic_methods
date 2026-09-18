@@ -1,0 +1,855 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Interactive geometric derivation of the active rotation matrix about the z axis.">
+  <title>Why the z-axis rotation matrix looks this way</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f3eddf;
+      --paper-deep: #e7dcc8;
+      --ink: #182633;
+      --muted: #6e746f;
+      --grid: rgba(24, 38, 51, 0.075);
+      --vermilion: #c8432f;
+      --vermilion-soft: #f0c2b6;
+      --blue: #1d6281;
+      --blue-soft: #b9d5df;
+      --gold: #9c7626;
+      --shadow: rgba(53, 43, 29, 0.17);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-height: 100%;
+      background: var(--paper-deep);
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      color: var(--ink);
+      font-family: Georgia, "Times New Roman", serif;
+      background:
+        radial-gradient(circle at 14% 8%, rgba(255, 255, 255, 0.72), transparent 28rem),
+        linear-gradient(145deg, var(--paper) 0%, #eee4d2 62%, #dfd1ba 100%);
+    }
+
+    body::before {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      content: "";
+      opacity: 0.26;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.14'/%3E%3C/svg%3E");
+      mix-blend-mode: multiply;
+    }
+
+    .page {
+      position: relative;
+      width: min(1480px, 100%);
+      min-height: 100vh;
+      margin: 0 auto;
+      padding: clamp(24px, 4vw, 64px);
+      display: grid;
+      grid-template-columns: minmax(280px, 0.72fr) minmax(620px, 1.55fr);
+      gap: clamp(30px, 5vw, 88px);
+      align-items: center;
+    }
+
+    .copy {
+      max-width: 31rem;
+      animation: enter-left 700ms cubic-bezier(.2, .8, .2, 1) both;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 0 0 22px;
+      color: var(--gold);
+      font-family: "Palatino Linotype", Palatino, serif;
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      width: 42px;
+      height: 1px;
+      content: "";
+      background: currentColor;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: "Palatino Linotype", Palatino, Georgia, serif;
+      font-size: clamp(2.7rem, 5vw, 5.6rem);
+      font-weight: 400;
+      line-height: 0.94;
+      letter-spacing: -0.045em;
+    }
+
+    h1 em {
+      display: block;
+      color: var(--vermilion);
+      font-weight: 400;
+    }
+
+    .lede {
+      max-width: 28rem;
+      margin: 28px 0 0;
+      color: #3e4a51;
+      font-size: clamp(1.03rem, 1.35vw, 1.22rem);
+      line-height: 1.68;
+    }
+
+    .principle {
+      margin: 34px 0 0;
+      padding: 18px 20px;
+      border-left: 3px solid var(--gold);
+      background: rgba(255, 252, 244, 0.42);
+      box-shadow: 0 10px 35px rgba(77, 59, 35, 0.06);
+      font-size: 0.98rem;
+      line-height: 1.55;
+    }
+
+    .principle strong {
+      display: block;
+      margin-bottom: 5px;
+      font-family: "Palatino Linotype", Palatino, serif;
+      font-size: 0.76rem;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+
+    .source-note {
+      margin: 16px 0 0;
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 1.5;
+    }
+
+    .board {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(24, 38, 51, 0.18);
+      border-radius: 4px;
+      background-color: rgba(252, 249, 240, 0.88);
+      background-image:
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 24px 24px;
+      box-shadow: 0 28px 75px var(--shadow), 8px 8px 0 rgba(156, 118, 38, 0.14);
+      animation: enter-up 800ms 100ms cubic-bezier(.2, .8, .2, 1) both;
+    }
+
+    .board::after {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 11px;
+      height: 100%;
+      content: "";
+      background: repeating-linear-gradient(
+        to bottom,
+        var(--vermilion) 0 24px,
+        var(--blue) 24px 48px,
+        var(--gold) 48px 72px
+      );
+    }
+
+    .board-head {
+      padding: 24px 30px 18px 38px;
+      display: flex;
+      gap: 22px;
+      align-items: baseline;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(24, 38, 51, 0.14);
+      background: rgba(246, 240, 226, 0.72);
+    }
+
+    .board-title {
+      margin: 0;
+      font-family: "Palatino Linotype", Palatino, serif;
+      font-size: clamp(1.15rem, 2vw, 1.55rem);
+      font-weight: 600;
+      letter-spacing: 0.015em;
+    }
+
+    .mode-label {
+      flex: none;
+      color: var(--muted);
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(390px, 1.42fr) minmax(260px, 0.82fr);
+      min-height: 590px;
+    }
+
+    .diagram-wrap {
+      position: relative;
+      min-height: 520px;
+      padding: 18px;
+      display: grid;
+      place-items: center;
+      border-right: 1px solid rgba(24, 38, 51, 0.13);
+    }
+
+    #rotation-diagram {
+      width: 100%;
+      height: auto;
+      max-height: 550px;
+      overflow: visible;
+    }
+
+    .axis {
+      stroke: var(--ink);
+      stroke-width: 1.6;
+      opacity: 0.78;
+    }
+
+    .unit-circle {
+      fill: rgba(255, 255, 255, 0.24);
+      stroke: var(--ink);
+      stroke-width: 1.1;
+      stroke-dasharray: 3 7;
+      opacity: 0.34;
+    }
+
+    .original {
+      fill: none;
+      stroke: #7e837e;
+      stroke-width: 3;
+      stroke-dasharray: 7 7;
+      opacity: 0.55;
+    }
+
+    .vector {
+      fill: none;
+      stroke-width: 5;
+      stroke-linecap: round;
+      filter: drop-shadow(0 3px 2px rgba(24, 38, 51, 0.12));
+    }
+
+    .vector-x {
+      stroke: var(--vermilion);
+    }
+
+    .vector-y {
+      stroke: var(--blue);
+    }
+
+    .projection {
+      fill: none;
+      stroke-width: 1.7;
+      stroke-dasharray: 5 6;
+      opacity: 0.86;
+    }
+
+    .projection-x {
+      stroke: var(--vermilion);
+    }
+
+    .projection-y {
+      stroke: var(--blue);
+    }
+
+    .theta-arc {
+      fill: none;
+      stroke: var(--gold);
+      stroke-width: 2.2;
+      stroke-linecap: round;
+    }
+
+    .svg-label {
+      fill: var(--ink);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 18px;
+      paint-order: stroke;
+      stroke: rgba(250, 247, 238, 0.95);
+      stroke-width: 5px;
+      stroke-linejoin: round;
+    }
+
+    .svg-small {
+      font-size: 14px;
+      font-style: italic;
+    }
+
+    .label-x {
+      fill: var(--vermilion);
+      font-weight: 700;
+    }
+
+    .label-y {
+      fill: var(--blue);
+      font-weight: 700;
+    }
+
+    .controls {
+      padding: 28px 27px 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 26px;
+      background: rgba(248, 244, 233, 0.57);
+    }
+
+    .angle-readout {
+      display: flex;
+      align-items: first baseline;
+      justify-content: space-between;
+      gap: 14px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(24, 38, 51, 0.15);
+    }
+
+    .angle-readout span:first-child {
+      color: var(--muted);
+      font-size: 0.75rem;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    #angle-value {
+      font-family: "Palatino Linotype", Palatino, serif;
+      font-size: clamp(2.3rem, 4vw, 3.3rem);
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .slider-label {
+      display: block;
+      margin: 20px 0 10px;
+      font-size: 0.86rem;
+      font-weight: 700;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      height: 24px;
+      margin: 0;
+      accent-color: var(--vermilion);
+      cursor: ew-resize;
+    }
+
+    .range-ends {
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .button-row {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 9px;
+    }
+
+    button {
+      min-height: 42px;
+      border: 1px solid var(--ink);
+      border-radius: 2px;
+      color: var(--paper);
+      font: 700 0.76rem/1 Georgia, serif;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      background: var(--ink);
+      cursor: pointer;
+      transition: transform 150ms ease, box-shadow 150ms ease, background 150ms ease;
+    }
+
+    button.secondary {
+      color: var(--ink);
+      background: transparent;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 13px rgba(24, 38, 51, 0.14);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    button:focus-visible,
+    input:focus-visible {
+      outline: 3px solid rgba(156, 118, 38, 0.45);
+      outline-offset: 3px;
+    }
+
+    .basis-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .basis-row {
+      display: grid;
+      grid-template-columns: 20px 1fr;
+      gap: 11px;
+      align-items: start;
+      font-size: 0.91rem;
+      line-height: 1.35;
+    }
+
+    .swatch {
+      width: 16px;
+      height: 3px;
+      margin-top: 0.58em;
+      background: currentColor;
+    }
+
+    .basis-row.x {
+      color: var(--vermilion);
+    }
+
+    .basis-row.y {
+      color: var(--blue);
+    }
+
+    .basis-row.z {
+      color: var(--ink);
+    }
+
+    .basis-row code {
+      display: block;
+      color: inherit;
+      font-family: Georgia, serif;
+      font-size: 0.91rem;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .matrix-card {
+      padding: 15px 13px 17px;
+      border-top: 1px solid rgba(24, 38, 51, 0.14);
+      border-bottom: 1px solid rgba(24, 38, 51, 0.14);
+      background: rgba(255, 255, 255, 0.27);
+    }
+
+    .matrix-title {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .matrix-line {
+      display: flex;
+      gap: 7px;
+      align-items: center;
+      justify-content: center;
+      font-size: clamp(0.82rem, 1.25vw, 1rem);
+    }
+
+    .matrix-symbol {
+      white-space: nowrap;
+      font-style: italic;
+    }
+
+    .matrix {
+      position: relative;
+      padding: 4px 11px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(38px, 1fr));
+      gap: 6px 10px;
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .matrix::before,
+    .matrix::after {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 7px;
+      content: "";
+      border-top: 1.5px solid var(--ink);
+      border-bottom: 1.5px solid var(--ink);
+    }
+
+    .matrix::before {
+      left: 0;
+      border-left: 1.5px solid var(--ink);
+    }
+
+    .matrix::after {
+      right: 0;
+      border-right: 1.5px solid var(--ink);
+    }
+
+    .matrix .col-x {
+      color: var(--vermilion);
+    }
+
+    .matrix .col-y {
+      color: var(--blue);
+    }
+
+    .takeaway {
+      margin: 0;
+      color: #48545a;
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
+
+    .takeaway strong {
+      color: var(--ink);
+    }
+
+    @keyframes enter-left {
+      from { opacity: 0; transform: translateX(-24px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes enter-up {
+      from { opacity: 0; transform: translateY(25px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 1080px) {
+      .page {
+        grid-template-columns: 1fr;
+        align-items: start;
+      }
+
+      .copy {
+        max-width: 48rem;
+      }
+
+      h1 em {
+        display: inline;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .page {
+        padding: 22px 14px 36px;
+      }
+
+      .board-head {
+        padding-left: 28px;
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 7px;
+      }
+
+      .workspace {
+        grid-template-columns: 1fr;
+      }
+
+      .diagram-wrap {
+        min-height: 390px;
+        border-right: 0;
+        border-bottom: 1px solid rgba(24, 38, 51, 0.13);
+      }
+
+      .controls {
+        padding-left: 30px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 1ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 1ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="copy" aria-labelledby="page-title">
+      <p class="eyebrow">A geometric derivation</p>
+      <h1 id="page-title">Rotate the basis, <em>read the columns.</em></h1>
+      <p class="lede">
+        A positive active rotation adds the same angle to both in-plane basis
+        vectors. Their projections onto the fixed axes become the entries of
+        the rotation matrix.
+      </p>
+      <p class="principle">
+        <strong>The one fact to remember</strong>
+        A unit vector at azimuth φ has Cartesian components
+        (cos φ, sin φ). The x basis starts at 0; the y basis starts at π/2.
+      </p>
+      <p class="source-note">
+        Original interactive schematic. The active-rotation convention follows
+        the EE237 symmetry lecture notes cited in the companion document.
+      </p>
+    </section>
+
+    <section class="board" aria-labelledby="board-title">
+      <header class="board-head">
+        <h2 class="board-title" id="board-title">Active rotation about +z</h2>
+        <span class="mode-label">Axes fixed · vectors move</span>
+      </header>
+
+      <div class="workspace">
+        <div class="diagram-wrap">
+          <svg id="rotation-diagram" viewBox="0 0 620 570" role="img" aria-labelledby="diagram-title diagram-desc">
+            <title id="diagram-title">Rotated Cartesian basis vectors</title>
+            <desc id="diagram-desc">The x and y basis vectors rotate counterclockwise by theta. Dashed lines show their Cartesian projections.</desc>
+            <defs>
+              <marker id="arrow-ink" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto" markerUnits="strokeWidth">
+                <path d="M0,0 L9,4.5 L0,9 z" fill="#182633"></path>
+              </marker>
+              <marker id="arrow-gray" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto" markerUnits="strokeWidth">
+                <path d="M0,0 L9,4.5 L0,9 z" fill="#7e837e"></path>
+              </marker>
+              <marker id="arrow-red" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto" markerUnits="strokeWidth">
+                <path d="M0,0 L9,4.5 L0,9 z" fill="#c8432f"></path>
+              </marker>
+              <marker id="arrow-blue" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto" markerUnits="strokeWidth">
+                <path d="M0,0 L9,4.5 L0,9 z" fill="#1d6281"></path>
+              </marker>
+              <marker id="arrow-gold" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto" markerUnits="strokeWidth">
+                <path d="M0,0 L8,4 L0,8 z" fill="#9c7626"></path>
+              </marker>
+            </defs>
+
+            <circle class="unit-circle" cx="305" cy="280" r="205"></circle>
+            <line class="axis" x1="54" y1="280" x2="570" y2="280" marker-end="url(#arrow-ink)"></line>
+            <line class="axis" x1="305" y1="530" x2="305" y2="24" marker-end="url(#arrow-ink)"></line>
+            <text class="svg-label" x="577" y="286">x</text>
+            <text class="svg-label" x="296" y="18">y</text>
+            <text class="svg-label svg-small" x="318" y="304">z ⊙</text>
+
+            <line class="original" x1="305" y1="280" x2="510" y2="280" marker-end="url(#arrow-gray)"></line>
+            <line class="original" x1="305" y1="280" x2="305" y2="75" marker-end="url(#arrow-gray)"></line>
+            <text class="svg-label svg-small" x="494" y="306">x̂</text>
+            <text class="svg-label svg-small" x="320" y="87">ŷ</text>
+
+            <path id="theta-arc" class="theta-arc" marker-end="url(#arrow-gold)"></path>
+            <text id="theta-label" class="svg-label" text-anchor="middle">θ</text>
+
+            <path id="x-projection" class="projection projection-x"></path>
+            <path id="y-projection" class="projection projection-y"></path>
+            <line id="x-vector" class="vector vector-x" x1="305" y1="280" marker-end="url(#arrow-red)"></line>
+            <line id="y-vector" class="vector vector-y" x1="305" y1="280" marker-end="url(#arrow-blue)"></line>
+            <text id="x-vector-label" class="svg-label label-x">Rz x̂</text>
+            <text id="y-vector-label" class="svg-label label-y">Rz ŷ</text>
+            <text id="x-coordinate-label" class="svg-label svg-small label-x" text-anchor="middle"></text>
+            <text id="y-coordinate-label" class="svg-label svg-small label-y" text-anchor="middle"></text>
+          </svg>
+        </div>
+
+        <aside class="controls" aria-label="Rotation controls and values">
+          <div>
+            <div class="angle-readout">
+              <span>Rotation</span>
+              <output id="angle-value" for="angle-slider">35°</output>
+            </div>
+            <label class="slider-label" for="angle-slider">Choose θ</label>
+            <input id="angle-slider" type="range" min="-180" max="180" value="35" step="1" aria-describedby="range-hint">
+            <div class="range-ends" id="range-hint">
+              <span>−180°</span><span>0°</span><span>+180°</span>
+            </div>
+            <div class="button-row">
+              <button id="play-button" type="button" aria-pressed="false">Play</button>
+              <button id="reset-button" class="secondary" type="button">Reset</button>
+            </div>
+          </div>
+
+          <div class="basis-list">
+            <div class="basis-row x">
+              <span class="swatch" aria-hidden="true"></span>
+              <code id="x-components">Rz x̂ = (0.819, 0.574, 0)</code>
+            </div>
+            <div class="basis-row y">
+              <span class="swatch" aria-hidden="true"></span>
+              <code id="y-components">Rz ŷ = (−0.574, 0.819, 0)</code>
+            </div>
+            <div class="basis-row z">
+              <span class="swatch" aria-hidden="true"></span>
+              <code>Rz ẑ = (0, 0, 1)</code>
+            </div>
+          </div>
+
+          <div class="matrix-card">
+            <p class="matrix-title">The images become the columns</p>
+            <div class="matrix-line" aria-label="Current numerical rotation matrix">
+              <span class="matrix-symbol">Rz(θ) =</span>
+              <div class="matrix" id="matrix-values">
+                <span class="col-x">0.819</span><span class="col-y">−0.574</span><span>0</span>
+                <span class="col-x">0.574</span><span class="col-y">0.819</span><span>0</span>
+                <span class="col-x">0</span><span class="col-y">0</span><span>1</span>
+              </div>
+            </div>
+          </div>
+
+          <p class="takeaway">
+            <strong>Why the minus sign?</strong> The rotated y basis lies at
+            π/2 + θ, whose x projection is cos(π/2 + θ) = −sin θ.
+          </p>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const cx = 305;
+      const cy = 280;
+      const radius = 205;
+      const arcRadius = 58;
+      const slider = document.querySelector("#angle-slider");
+      const angleValue = document.querySelector("#angle-value");
+      const playButton = document.querySelector("#play-button");
+      const resetButton = document.querySelector("#reset-button");
+      const xVector = document.querySelector("#x-vector");
+      const yVector = document.querySelector("#y-vector");
+      const xProjection = document.querySelector("#x-projection");
+      const yProjection = document.querySelector("#y-projection");
+      const xVectorLabel = document.querySelector("#x-vector-label");
+      const yVectorLabel = document.querySelector("#y-vector-label");
+      const xCoordinateLabel = document.querySelector("#x-coordinate-label");
+      const yCoordinateLabel = document.querySelector("#y-coordinate-label");
+      const thetaArc = document.querySelector("#theta-arc");
+      const thetaLabel = document.querySelector("#theta-label");
+      const xComponents = document.querySelector("#x-components");
+      const yComponents = document.querySelector("#y-components");
+      const matrixValues = document.querySelector("#matrix-values");
+
+      let animationFrame = null;
+      let previousTime = null;
+      let animationAngle = Number(slider.value);
+
+      const radians = degrees => degrees * Math.PI / 180;
+      const clean = value => Math.abs(value) < 0.0005 ? 0 : value;
+      const number = value => clean(value).toFixed(3).replace("-", "−");
+      const coordinate = (angle, length = radius) => ({
+        x: cx + length * Math.cos(angle),
+        y: cy - length * Math.sin(angle)
+      });
+
+      function setLine(line, point) {
+        line.setAttribute("x2", point.x.toFixed(2));
+        line.setAttribute("y2", point.y.toFixed(2));
+      }
+
+      function setLabel(label, point, offsetX, offsetY) {
+        label.setAttribute("x", (point.x + offsetX).toFixed(2));
+        label.setAttribute("y", (point.y + offsetY).toFixed(2));
+      }
+
+      function update() {
+        const degrees = Number(slider.value);
+        const theta = radians(degrees);
+        const cosine = clean(Math.cos(theta));
+        const sine = clean(Math.sin(theta));
+        const xEnd = coordinate(theta);
+        const yEnd = coordinate(theta + Math.PI / 2);
+        const arcEnd = coordinate(theta, arcRadius);
+        const arcMid = coordinate(theta / 2, arcRadius + 24);
+        const sweep = degrees >= 0 ? 0 : 1;
+        const largeArc = Math.abs(degrees) > 180 ? 1 : 0;
+
+        angleValue.textContent = `${degrees < 0 ? "−" : ""}${Math.abs(degrees)}°`;
+        setLine(xVector, xEnd);
+        setLine(yVector, yEnd);
+
+        xProjection.setAttribute(
+          "d",
+          `M ${xEnd.x.toFixed(2)} ${cy} L ${xEnd.x.toFixed(2)} ${xEnd.y.toFixed(2)} L ${cx} ${xEnd.y.toFixed(2)}`
+        );
+        yProjection.setAttribute(
+          "d",
+          `M ${yEnd.x.toFixed(2)} ${cy} L ${yEnd.x.toFixed(2)} ${yEnd.y.toFixed(2)} L ${cx} ${yEnd.y.toFixed(2)}`
+        );
+
+        thetaArc.setAttribute(
+          "d",
+          `M ${cx + arcRadius} ${cy} A ${arcRadius} ${arcRadius} 0 ${largeArc} ${sweep} ${arcEnd.x.toFixed(2)} ${arcEnd.y.toFixed(2)}`
+        );
+        thetaArc.style.opacity = Math.abs(degrees) < 2 ? "0" : "1";
+        setLabel(thetaLabel, arcMid, 0, 5);
+        thetaLabel.style.opacity = Math.abs(degrees) < 8 ? "0" : "1";
+
+        setLabel(xVectorLabel, xEnd, cosine >= 0 ? 13 : -64, sine >= 0 ? -10 : 24);
+        setLabel(yVectorLabel, yEnd, -sine >= 0 ? 13 : -64, cosine >= 0 ? -10 : 24);
+        setLabel(xCoordinateLabel, { x: (cx + xEnd.x) / 2, y: cy }, 0, sine >= 0 ? 24 : -12);
+        setLabel(yCoordinateLabel, { x: (cx + yEnd.x) / 2, y: cy }, 0, cosine >= 0 ? 24 : -12);
+        xCoordinateLabel.textContent = `cos θ = ${number(cosine)}`;
+        yCoordinateLabel.textContent = `−sin θ = ${number(-sine)}`;
+
+        xComponents.textContent = `Rz x̂ = (${number(cosine)}, ${number(sine)}, 0)`;
+        yComponents.textContent = `Rz ŷ = (${number(-sine)}, ${number(cosine)}, 0)`;
+
+        const values = [cosine, -sine, 0, sine, cosine, 0, 0, 0, 1];
+        [...matrixValues.children].forEach((cell, index) => {
+          cell.textContent = Number.isInteger(values[index]) ? values[index] : number(values[index]);
+        });
+      }
+
+      function stopAnimation() {
+        if (animationFrame !== null) {
+          cancelAnimationFrame(animationFrame);
+        }
+        animationFrame = null;
+        previousTime = null;
+        playButton.textContent = "Play";
+        playButton.setAttribute("aria-pressed", "false");
+      }
+
+      function animate(time) {
+        if (previousTime !== null) {
+          animationAngle += (time - previousTime) * 0.035;
+          if (animationAngle > 180) animationAngle = -180;
+          slider.value = String(Math.round(animationAngle));
+          update();
+        }
+        previousTime = time;
+        animationFrame = requestAnimationFrame(animate);
+      }
+
+      slider.addEventListener("input", () => {
+        stopAnimation();
+        update();
+      });
+
+      playButton.addEventListener("click", () => {
+        if (animationFrame !== null) {
+          stopAnimation();
+          return;
+        }
+        playButton.textContent = "Pause";
+        playButton.setAttribute("aria-pressed", "true");
+        animationAngle = Number(slider.value);
+        animationFrame = requestAnimationFrame(animate);
+      });
+
+      resetButton.addEventListener("click", () => {
+        stopAnimation();
+        slider.value = "35";
+        update();
+        slider.focus();
+      });
+
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden) stopAnimation();
+      });
+
+      update();
+    })();
+  </script>
+</body>
+</html>

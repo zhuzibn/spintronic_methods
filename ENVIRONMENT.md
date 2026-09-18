@@ -11,7 +11,7 @@ Building `spintronic_methods.pdf` requires:
 - `pdflatex`;
 - `kpsewhich` for deterministic package discovery; and
 - the LaTeX files `amsmath.sty`, `amssymb.sty`, `bm.sty`, `geometry.sty`,
-  `graphicx.sty`, and `hyperref.sty`.
+  `graphicx.sty`, `hyperref.sty`, and `tikz.sty`.
 
 Rendering standalone equation SVGs additionally requires:
 
@@ -76,6 +76,7 @@ kpsewhich bm.sty
 kpsewhich geometry.sty
 kpsewhich graphicx.sty
 kpsewhich hyperref.sty
+kpsewhich tikz.sty
 kpsewhich standalone.cls
 ```
 

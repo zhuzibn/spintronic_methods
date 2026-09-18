@@ -22,8 +22,13 @@ and SVG files are reproducible build artifacts and should not be committed.
 - `references.tex` — numbered references cited by the document sections.
 - `symbols.tex` — parameter definitions, physical constants, units, and field
   conventions.
-- `sections/symmetries.tex` — time-reversal, inversion, mirror, spin-rotation,
-  and combined parity--time symmetries for spin systems.
+- `sections/symmetries.tex` — a symmetry-for-spintronics tutorial covering
+  time reversal, inversion, parity--time symmetry, mirror and spin-rotation
+  rules, plus symmetry selection rules for Rashba SOC, DMI, spin and anomalous
+  Hall effects, Edelstein response, SOT, STT, and altermagnetic spin splitting.
+- `interactive/z-axis-rotation.html` — a dependency-free interactive companion
+  for the active $z$-axis rotation derivation, with animated basis vectors,
+  Cartesian projections, and a live rotation matrix.
 - `sections/material_parameters.tex` — shared heavy-metal spin-Hall angles and
   literature- and implementation-sourced parameter sets for CoFeB, GdFeCo,
   Mn$_3$Sn, and layered van der Waals antiferromagnets, with model and unit

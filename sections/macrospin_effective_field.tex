@@ -66,6 +66,57 @@ therefore gives $H_{\mathrm{an},z}=2K_u/(\mu_0\Ms)$.
 For a thin film with bulk and interfacial uniaxial anisotropy,
 $K_u=K_{\mathrm{bulk}}+K_i/t_{\mathrm{FM}}$.
 
+Figure~\ref{fig:uniaxial-energy-barrier} connects the magnetization geometry
+to the zero-field uniaxial energy barrier used in the thermal-stability factor.
+
+\begin{figure}[htbp]
+    \centering
+    \begin{tikzpicture}[>=stealth,scale=0.95]
+        \begin{scope}
+            \node[font=\bfseries] at (1.7,2.55)
+                {(a) Uniaxial macrospin};
+            \draw[fill=gray!12] (-1.0,-0.22) ellipse (2.1 and 0.42);
+            \draw[->] (-0.2,0) -- (3.0,0) node[right] {$x$};
+            \draw[->] (0,-0.55) -- (0,2.2) node[above] {$z$};
+            \draw[->,very thick,red] (0,-0.45) -- (0,1.95)
+                node[above left] {$\hat{\mathbf u}=\hat{\mathbf z}$};
+            \draw[->,very thick,blue] (0,0) -- (55:2.15)
+                node[above right] {$\mathbf m$};
+            \draw[->,thick] (55:0.72)
+                arc[start angle=55,end angle=90,radius=0.72];
+            \node at (0.45,0.95) {$\theta$};
+            \node[below] at (1.1,-0.5) {magnetic layer};
+        \end{scope}
+
+        \begin{scope}[xshift=8cm]
+            \node[font=\bfseries] at (1.55,2.55)
+                {(b) Zero-field energy};
+            \draw[->] (-0.15,0) -- (3.45,0) node[right] {$\theta$};
+            \draw[->] (0,-0.1) -- (0,2.2) node[above] {$E(\theta)$};
+            \draw[very thick,blue,domain=0:180,samples=80]
+                plot ({\x/60},{1.7*(sin(\x))^2});
+            \node[below] at (0,0) {$0$};
+            \node[below] at (1.5,0) {$\pi/2$};
+            \node[below] at (3.0,0) {$\pi$};
+            \node[above right] at (0.05,0.08) {$+\hat{\mathbf u}$};
+            \node[above left] at (2.95,0.08) {$-\hat{\mathbf u}$};
+            \draw[<->,thick] (1.5,0.05) -- (1.5,1.7)
+                node[midway,right] {$E_{\mathrm b}=K_uV$};
+            \draw[<->,thick,red] (0.35,0.05) -- (0.35,0.55)
+                node[midway,right] {$k_{\mathrm B}T$};
+        \end{scope}
+    \end{tikzpicture}
+    \caption{Original schematic linking uniaxial macrospin geometry and
+    thermal stability.  (a) The normalized magnetization $\mathbf m$ makes an
+    angle $\theta$ with the easy axis $\hat{\mathbf u}$.  (b) For a zero-field
+    volume $V$ with energy $E(\theta)=K_uV\sin^2\theta$, the two easy-axis
+    states are separated by $E_{\mathrm b}=K_uV$; the ratio of this barrier to
+    the thermal scale $k_{\mathrm B}T$ is the stability factor.  The conventions
+    follow the EE237 anisotropy and thermal-stability notes
+    ~\cite{ee237-week5,ee237-week10}.}
+    \label{fig:uniaxial-energy-barrier}
+\end{figure}
+
 \paragraph{Demagnetization field.}
 Slide 21 of the same notes writes the demagnetization self-energy
 as~\cite{ee237-week5}
