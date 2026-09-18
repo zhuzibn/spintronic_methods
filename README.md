@@ -25,8 +25,9 @@ and SVG files are reproducible build artifacts and should not be committed.
 - `sections/symmetries.tex` — time-reversal, inversion, mirror, spin-rotation,
   and combined parity--time symmetries for spin systems.
 - `sections/material_parameters.tex` — shared heavy-metal spin-Hall angles and
-  literature- and implementation-sourced parameter sets for CoFeB, GdFeCo, and
-  Mn$_3$Sn, with model and unit conventions.
+  literature- and implementation-sourced parameter sets for CoFeB, GdFeCo,
+  Mn$_3$Sn, and layered van der Waals antiferromagnets, with model and unit
+  conventions.
 - `sections/hamiltonian.tex` — atomistic spin Hamiltonian.
 - `sections/macrospin_effective_field.tex` — one- and two-sublattice macrospin
   energies and effective fields, including anisotropy, demagnetization,
