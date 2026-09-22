@@ -271,9 +271,13 @@ $180^\circ$ rotation; in three dimensions it has determinant $-1$
 ~\cite{ee237-week11}.
 
 \subsection{Polar and Axial Vectors}
+\label{sec:polar-axial-vectors}
 
-Position $\mathbf{r}$, momentum $\mathbf{p}$, electric field $\mathbf{E}$, and
-charge-current density $\mathbf{J}$ are polar vectors.  Orbital angular momentum
+Position $\mathbf{r}$, momentum $\mathbf{p}$, Bloch wavevector $\mathbf{k}$,
+electric field $\mathbf{E}$, and charge-current density $\mathbf{J}$ are polar
+vectors.  Here $\mathbf{k}$ labels an electronic Bloch state in the Brillouin
+zone, $\hbar\mathbf{k}$ is the corresponding crystal momentum, and $\mathbf{k}$
+is defined modulo a reciprocal-lattice vector.  Orbital angular momentum
 $\mathbf{L}=\mathbf{r}\times\mathbf{p}$, spin $\mathbf{S}$, magnetization
 $\mathbf{M}$, and magnetic field $\mathbf{B}$ are axial vectors.  For an
 orthogonal spatial transformation represented by $R$, the two vector classes
@@ -296,16 +300,18 @@ mapped by the operation.
     \small
     \begin{tabular}{|p{0.14\linewidth}|p{0.22\linewidth}|p{0.27\linewidth}|p{0.19\linewidth}|}
         \hline
-        Operation                                                         & $\mathbf{r},\mathbf{p}$ & $\mathbf{S},\mathbf{M}$ &
+        Operation                                                         & $\mathbf{r},\mathbf{p},\mathbf{k}$ & $\mathbf{S},\mathbf{M}$ &
         $\mathbf{E},\mathbf{B}$                                                                                                 \\
         \hline
         Time reversal $\mathcal{T}$                                       &
-        $\mathbf{r}\to\mathbf{r}$, $\mathbf{p}\to-\mathbf{p}$             &
+        $\mathbf{r}\to\mathbf{r}$, $\mathbf{p}\to-\mathbf{p}$,
+        $\mathbf{k}\to-\mathbf{k}$                                       &
         $\mathbf{S},\mathbf{M}\to-\mathbf{S},-\mathbf{M}$                 &
         $\mathbf{E}\to\mathbf{E}$, $\mathbf{B}\to-\mathbf{B}$                                                                   \\
         \hline
         Inversion $\mathcal{P}$                                           &
-        $\mathbf{r},\mathbf{p}\to-\mathbf{r},-\mathbf{p}$                 &
+        $\mathbf{r}\to-\mathbf{r}$, $\mathbf{p}\to-\mathbf{p}$,
+        $\mathbf{k}\to-\mathbf{k}$                                       &
         $\mathbf{S},\mathbf{M}\to\mathbf{S},\mathbf{M}$                   &
         $\mathbf{E}\to-\mathbf{E}$, $\mathbf{B}\to\mathbf{B}$                                                                   \\
         \hline
@@ -316,6 +322,10 @@ mapped by the operation.
         \hline
     \end{tabular}
 \end{center}
+
+\paragraph{Source status.}
+\textbf{Reference needed.}  The Bloch-wavevector definition and its
+transformation rules require an approved project reference.
 
 Figure~\ref{fig:polar-axial-improper-transformations} visualizes the different
 sign rules for polar and axial vectors under spatial inversion.
@@ -515,13 +525,15 @@ whereas time reversal does, their actions are
     \end{array}
     \label{eq:pt-order-parameters}
 \end{equation}
-Thus a compensated antiferromagnetic pattern can be invariant under the
-combined operation even when it is not invariant under $\mathcal{P}$ or
-$\mathcal{T}$ separately.  In a different use of parity, Zhang \emph{et al.}
-define $\mathcal{P}$ as interchange of two coupled ferrimagnetic layers and
-obtain parity--time-symmetric N\'eel-vector dynamics at angular-momentum
-compensation~\cite{zhang2024nonhermitian}.  These two meanings should not be
-conflated.
+For example, $\mathcal{P}$ maps $A\!\uparrow$ to $B\!\uparrow$, and
+$\mathcal{T}$ then maps it to $B\!\downarrow$, which is part of the original
+magnetic pattern.  Thus a compensated antiferromagnetic pattern can be
+invariant under the combined operation even when it is not invariant under
+$\mathcal{P}$ or $\mathcal{T}$ separately.  In a different use of parity,
+Zhang \emph{et al.} define $\mathcal{P}$ as interchange of two coupled
+ferrimagnetic layers and obtain parity--time-symmetric N\'eel-vector dynamics
+at angular-momentum compensation~\cite{zhang2024nonhermitian}.  These two
+meanings should not be conflated.
 
 \paragraph{Source status.}
 \textbf{Reference needed.}  Equation~\eqref{eq:pt-order-parameters} is a direct
@@ -571,8 +583,9 @@ be interpreted as a nonequilibrium response, not as a new equilibrium order
 parameter.
 
 \paragraph{Band-degeneracy checkpoint.}
-Both $\mathcal{P}$ and $\mathcal{T}$ reverse $\mathbf{k}$, so their product
-leaves each crystal momentum fixed.  For spin-$1/2$ electrons with
+From the transformation rules in Sec.~\ref{sec:polar-axial-vectors}, both
+$\mathcal{P}$ and $\mathcal{T}$ reverse $\mathbf{k}$, so their product acts
+within the same point of the Brillouin zone.  For spin-$1/2$ electrons with
 $(\mathcal{PT})^2=-1$, $\mathcal{PT}$ produces a Kramers-like partner at the
 same $\mathbf{k}$.  Consequently, a $\mathcal{PT}$-symmetric collinear magnet
 cannot have a same-$\mathbf{k}$ spin splitting.  Breaking $\mathcal{PT}$ is
@@ -598,11 +611,21 @@ isotropic momentum-linear term is
     \label{eq:symmetry-rashba}
 \end{equation}
 Time reversal changes both $\mathbf{k}$ and $\boldsymbol{\sigma}$ in sign, so
-Eq.~\eqref{eq:symmetry-rashba} is $\mathcal{T}$ even.  Inversion changes
-$\mathbf{k}$ but not the axial spin; moreover an inversion-symmetric crystal
-cannot possess the fixed polar axis $\mathbf{n}$.  Thus a nonzero Rashba
-coefficient requires inversion asymmetry, while time reversal may remain a
-symmetry.  The eigenvalues
+Eq.~\eqref{eq:symmetry-rashba} is $\mathcal{T}$ even.
+
+\paragraph{Why the polar axis implies broken inversion.}
+The axis $\mathbf{n}$ is a polar vector, such as an interface normal or the
+direction of a built-in electric field.  Under inversion it transforms as
+$\mathbf{n}\to-\mathbf{n}$.  If inversion were a symmetry of the same crystal,
+however, every fixed material property would have to be unchanged by that
+operation.  A fixed polar axis would therefore have to satisfy
+$\mathbf{n}=-\mathbf{n}$, which permits only $\mathbf{n}=0$.  Equivalently, a
+nonzero $\mathbf{n}$ distinguishes the two opposite directions and inversion
+maps the crystal to a distinct structure or domain with axis $-\mathbf{n}$.
+Consequently, the Rashba term can be nonzero only when the environment breaks
+inversion symmetry, while time reversal may remain a symmetry.  Typical
+examples are a surface, an asymmetric interface, or a polar crystal.  The
+eigenvalues
 \begin{equation}
     \varepsilon_{\pm}(\mathbf{k})
     =\varepsilon_0(\mathbf{k})
@@ -615,7 +638,8 @@ $\mathcal{T}$~\cite{manchon2015rashba}.
 
 \paragraph{Source status.}
 \textbf{Reference needed.}  Equations~\eqref{eq:symmetry-rashba} and
-\eqref{eq:rashba-splitting} still need an approved project reference.
+\eqref{eq:rashba-splitting}, together with the polar-axis inversion argument,
+still need an approved project reference.
 
 \subsubsection{Dzyaloshinskii--Moriya Interaction: Break Bond-Center
     Inversion}
@@ -652,26 +676,96 @@ In an isotropic spin Hall material the leading response can be written
     Q_i^{\,a}=\sigma_{\mathrm{SH}}\epsilon_{iaj}E_j.
     \label{eq:symmetry-spin-hall}
 \end{equation}
-Both $Q_i^{\,a}$ and $E_j$ are odd under inversion, while both are even under
-time reversal.  Neither $\mathcal{P}$ nor $\mathcal{T}$ must therefore be
-broken for the spin Hall effect; crystal mirrors and rotations only restrict
-the allowed tensor components.  This is why a centrosymmetric nonmagnetic
-heavy metal can generate a transverse spin current~\cite{sot-stt-compact-model,
-    liu2012ta-spin-hall,pai2012w-spin-hall,davidson2020spin-currents}.
+Here $Q_i^{\,a}$ means a flow along direction $i$ whose spins are polarized
+along direction $a$.  A spin current therefore combines carrier motion, which
+is a polar vector, with spin, which is an axial vector.  Under inversion the
+motion reverses while the spin does not, so $Q_i^{\,a}$ reverses just as the
+electric field does.  Under time reversal both the motion and the spin reverse,
+so their product $Q_i^{\,a}$ is unchanged, just as the electric field is.
+Consequently, applying either $\mathcal{P}$ or $\mathcal{T}$ changes the two
+sides of Eq.~\eqref{eq:symmetry-spin-hall} in the same way and does not require
+$\sigma_{\mathrm{SH}}$ to vanish.
+
+An intuitive two-channel picture gives the same result: spin--orbit coupling
+deflects opposite spin polarizations toward opposite transverse directions.
+Their transverse charge currents cancel, but their spin currents add because
+both the spin and the direction of motion are reversed.  Thus no net
+magnetization or broken inversion symmetry is required.  Crystal mirrors and
+rotations can still force particular tensor components to vanish or relate
+them to one another, but they need not eliminate the spin Hall response as a
+whole.  This is why a centrosymmetric nonmagnetic heavy metal can generate a
+transverse spin current~\cite{sot-stt-compact-model,liu2012ta-spin-hall,
+    pai2012w-spin-hall,davidson2020spin-currents}.
+
+\paragraph{Worked example: magnetization-enabled spin-current components.}
+Take an electric field $E_x$ and ask which currents flowing along $z$ are
+allowed.  In the nonmagnetic geometry discussed by Davidson \emph{et al.},
+$E_x$ preserves the mirrors $\sigma_{xz}$ and $\sigma_{xy}$ and the twofold
+rotation $C_2^x$.  Testing the polar flow velocity and axial spin polarization
+under all three operations leaves only the conventional component
+$Q_z^{\,y}$ allowed.  A ferromagnetic order parameter lowers this symmetry:
+the operation remains a constraint only when it also preserves the chosen
+magnetization.  The resulting selection rules are
+\begin{center}
+    \small
+    \begin{tabular}{|p{0.19\linewidth}|p{0.17\linewidth}|p{0.26\linewidth}|p{0.22\linewidth}|}
+        \hline
+        Magnetization & Remaining symmetry & Allowed responses shown
+        & Newly allowed response \\
+        \hline
+        $\mathbf{m}\parallel\hat{\mathbf{x}}$ & $C_2^x$
+        & $Q_z^{\,y},\ Q_z^{\,z}$ & $Q_z^{\,z}$ \\
+        \hline
+        $\mathbf{m}\parallel\hat{\mathbf{y}}$ & $\sigma_{xz}$
+        & $j_z,\ Q_z^{\,y}$ & $j_z$ \\
+        \hline
+        $\mathbf{m}\parallel\hat{\mathbf{z}}$ & $\sigma_{xy}$
+        & $Q_z^{\,x},\ Q_z^{\,y}$ & $Q_z^{\,x}$ \\
+        \hline
+    \end{tabular}
+\end{center}
+For instance, when $\mathbf{m}\parallel\hat{\mathbf{x}}$, only $C_2^x$
+remains.  This rotation reverses both the $z$-directed flow velocity and the
+$z$-directed spin, so their product $Q_z^{\,z}$ is invariant.  The two mirrors
+that forbade this component in the nonmagnetic system are no longer symmetries
+of the magnetized state.
+Thus magnetization can enable an anomalous-Hall charge current or a spin
+current with an unconventional polarization by removing the symmetry that
+previously forced that response to vanish.  This test determines whether a
+component is allowed, not its sign, magnitude, or microscopic
+origin~\cite{davidson2020spin-currents}.
+
+\paragraph{Source status for the worked example.}
+\textbf{Reference needed.}  The Davidson perspective supplies this example,
+but an approved project reference is still needed for the detailed
+ferromagnetic selection rules.
 
 For the anomalous Hall effect,
 \begin{equation}
     \mathbf{j}_{\mathrm{AH}}=\mathbf{h}\times\mathbf{E},
     \label{eq:symmetry-anomalous-hall}
 \end{equation}
-where the Hall vector $\mathbf{h}$ is axial and time-reversal odd.  Inversion
-does not forbid it, but $\mathcal{T}$ does.  Because $\mathcal{PT}$ also changes
-$\mathbf{h}$ in sign while leaving its spatial point fixed, $\mathcal{PT}$
-forbids the anomalous Hall vector.  Conversely, breaking $\mathcal{T}$ and
-$\mathcal{PT}$ is only a necessary screen: a mirror, rotation, or another
-antiunitary symmetry can still force a particular component of $\mathbf{h}$
-to vanish.  Compensated magnets can therefore have an anomalous Hall effect
-without a net moment when their magnetic point group allows a time-odd axial
+where the Hall vector $\mathbf{h}$ is a compact representation of the
+antisymmetric Hall conductivity.  Its transformation properties follow from
+the response equation.  Both charge current and electric field are polar
+vectors, so inversion gives
+$\mathbf{j}_{\mathrm{AH}}\to-\mathbf{j}_{\mathrm{AH}}$ and
+$\mathbf{E}\to-\mathbf{E}$.  The right-hand side then has the required minus
+sign only if $\mathbf{h}$ remains unchanged under inversion; this is the
+inversion rule for an axial vector.  Time reversal instead gives
+$\mathbf{j}_{\mathrm{AH}}\to-\mathbf{j}_{\mathrm{AH}}$ because carrier velocity
+reverses, while $\mathbf{E}\to\mathbf{E}$.  Therefore $\mathbf{h}$ must reverse
+under time reversal so that $\mathbf{h}\times\mathbf{E}$ also reverses.
+
+In short, $\mathbf{h}$ is inversion even but time-reversal odd.  Inversion does
+not forbid it, whereas an equilibrium state that preserves $\mathcal{T}$ must
+have $\mathbf{h}=0$.  Because $\mathcal{PT}$ also changes $\mathbf{h}$ in sign
+while leaving its spatial point fixed, $\mathcal{PT}$ forbids the anomalous
+Hall vector.  Conversely, breaking $\mathcal{T}$ and $\mathcal{PT}$ is only a
+necessary screen: a mirror, rotation, or another antiunitary symmetry can still
+force a particular component of $\mathbf{h}$ to vanish.  The Hall vector need
+not be proportional to a net magnetization, so compensated magnets can have an
+anomalous Hall effect when their magnetic point group allows a time-odd axial
 vector~\cite{smejkal2022ahe}.
 
 \paragraph{Source status.}
@@ -736,12 +830,25 @@ Hall microscopic mechanisms, because either mechanism can contribute to both
 forms~\cite{manchon2019sot,zhang2024revisiting,xu2023field-free-afm}.
 
 A single vertical mirror illustrates how an unconventional component appears.
-Take the surviving mirror to be the $yz$ plane.  Then $E_x\to-E_x$, while the
-axial component $\zeta_z\to-\zeta_z$, so $\zeta_z\propto E_x$ is allowed.  For
-current inside the mirror plane, $E_y\to E_y$ but $\zeta_z\to-\zeta_z$, so the
-same response is forbidden.  This is the symmetry logic behind the
-current-direction-dependent out-of-plane torque in WTe$_2$/ferromagnet
-bilayers~\cite{ee237-week11,macneill2017wte2,liu2020twod-sot}.
+Take the surviving mirror to be the $yz$ plane, represented by
+$R=\operatorname{diag}(-1,1,1)$.  Because $\mathbf{E}$ is polar, it transforms
+as $\mathbf{E}'=R\mathbf{E}$, whereas the axial spin polarization transforms as
+$\boldsymbol{\zeta}'=(\det R)R\boldsymbol{\zeta}$.  Hence
+$E_x\to-E_x$, $E_y\to E_y$, and $\zeta_z\to-\zeta_z$.
+
+The selection rule follows by writing the possible linear response as
+$\zeta_z=\chi_{zx}E_x+\chi_{zy}E_y$.  Mirror symmetry requires the transformed
+quantities to obey the same response law.  The term $\chi_{zx}E_x$ satisfies
+this requirement because both $E_x$ and $\zeta_z$ change sign, so
+$\zeta_z\propto E_x$ is allowed.  In contrast, $E_y$ is unchanged while
+$\zeta_z$ changes sign.  The relation $\zeta_z=\chi_{zy}E_y$ can then equal its
+mirror image only if $\chi_{zy}=0$, so an in-plane current parallel to the
+mirror plane cannot generate this component.  Since $\zeta_z$ is normal to the
+bilayer plane, inserting this symmetry-allowed polarization into
+Eq.~\eqref{eq:symmetry-sot} produces the corresponding out-of-plane torque
+component.  This is the symmetry logic behind the current-direction-dependent
+out-of-plane torque in WTe$_2$/ferromagnet bilayers~\cite{ee237-week11,
+    macneill2017wte2,liu2020twod-sot}.
 
 For antiferromagnets, global inversion can forbid the uniform torque while
 local inversion asymmetry permits opposite sublattice torques.  Whether the
