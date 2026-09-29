@@ -1,0 +1,72 @@
+\subsection{Boundary Conditions in Atomistic Model Development}
+
+Boundary conditions are part of the physical model, but the most useful
+development order need not be the final production geometry.  A practical
+atomistic workflow is to establish the bulk model under periodic boundary
+conditions first and then change to open boundaries when the scientific
+question concerns a finite sample, an edge, or a spatially nonuniform
+process.  This is a verification sequence, not a rule that periodic
+boundaries are always more physical~\cite{astro-code,kong2026spatially}.
+
+\paragraph{Periodic bulk-verification stage.}
+Periodic boundaries identify opposite sides of the simulation cell, so a
+displayed edge is connected to its periodic image and is not a physical
+surface.  This makes periodic calculations useful for learning and checking
+the lattice construction, bulk coordination, bond multiplicities, pair
+counting, translational invariance, energy per cell, and supercell
+invariance.  Small deterministic lattices should also verify the orientation
+of every wrapped directed bond.  The ASTRO reference implementation and its
+field tests treat periodic and nonperiodic neighbor semantics as distinct
+cases rather than changing them implicitly~\cite{astro-code}.
+
+\paragraph{Open finite-geometry stage.}
+After the structure, interaction topology, conservative fields, dynamical
+right-hand side, and integrator have passed their periodic checks, use open
+boundaries for spatially resolved finite-device studies.  In an atomistic
+open-boundary model, edge spins remain dynamical and a finite-range bond is
+omitted when its other endpoint lies outside the simulated geometry.  This
+must not be implemented by wrapping the neighbor to the opposite edge,
+clamping the edge spin, or inserting a zero-valued ghost spin.  Fixed or
+pinned spins describe an additional physical constraint and require their
+own justification.  Mixed boundaries are appropriate when the target
+geometry is periodic along one direction and finite along
+another~\cite{astro-code}.
+
+\paragraph{DMI and physical edge response.}
+For the unique-bond DMI convention in
+Eq.~\eqref{eq:atomistic-hamiltonian}, every retained directed bond must obey
+$\mathbf D_{ji}=-\mathbf D_{ij}$.  An open edge omits DMI bonds that cross
+the boundary but does not suppress the response of the remaining edge
+spins.  The reduced edge coordination can produce chiral canting,
+boundary-localized textures, and edge-assisted nucleation; such effects are
+part of the finite magnetic problem rather than automatically numerical
+artifacts.  Spatially resolved atomistic SOT calculations with DMI provide
+an example in which local switching behavior cannot be inferred safely from
+only a spatial average~\cite{kong2026spatially}.  Truncating bulk DMI bonds is
+the simplest free-edge approximation; it does not establish that a real
+atomic termination has unchanged bulk bond coefficients.
+
+\paragraph{Finite-size and wave checks.}
+Open boundaries remove direct periodic wraparound, but two edges can still
+interact through a domain wall, soliton, or propagating spin wave when the
+sample is too small.  Compare increasing lateral sizes and require both the
+central-region trajectory and the selected device observable to converge,
+while retaining edge-resolved diagnostics.  Periodic calculations require a
+corresponding check that a localized texture does not interact materially
+with its periodic images.  Neither an ordinary open boundary nor a periodic
+boundary is an absorbing boundary.  If suppression of reflected waves is a
+numerical requirement, introduce and validate a separate damping buffer and
+report the observable region from which that buffer is
+excluded~\cite{zhu2020terahertz,astro-code}.
+
+The recommended sequence is therefore
+\begin{equation}
+    \text{periodic bulk construction and term checks}
+    \;\longrightarrow\;
+    \text{open finite-geometry spatial studies},
+    \label{eq:atomistic-boundary-workflow}
+\end{equation}
+with both modes retained as explicit, tested configurations.  A result must
+state which mode was used; changing the boundary mode changes the modeled
+system and is not merely a solver
+option~\cite{astro-code,kong2026spatially}.

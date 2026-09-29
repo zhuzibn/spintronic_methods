@@ -11,10 +11,11 @@
   `spintronic_methods.pdf` after LaTeX source changes. Keep that auto-built PDF
   in the working tree instead of restoring it. Treat the automatic rebuild as
   unverified until its build result or generated output has been checked.
-- Before every commit, rebuild `spintronic_methods.pdf` from the current LaTeX
-  source, verify that the build succeeds, stage the PDF with the other changes,
-  and include it in the commit. When pushing the commit, push the PDF to GitHub
-  as part of that commit so the current rendered document is publicly available.
+- Before every commit, rebuild `spintronic_methods.pdf` and
+  `spintronics_background.pdf` from the current LaTeX sources, verify that both
+  builds succeed, stage both PDFs with the other changes, and include them in
+  the commit. When pushing the commit, push both PDFs to GitHub as part of that
+  commit so the current rendered documents are publicly available.
   This commit-time requirement is an explicit exception to the default
   no-compilation rule above.
 

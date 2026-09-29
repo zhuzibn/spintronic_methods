@@ -1,8 +1,10 @@
 \section{Notation and Conventions}
 
 Unless a section explicitly states otherwise, vectors are bold, unit vectors carry a
-hat, time is measured in seconds, and magnetic fields $\vect{H}$ are expressed in
-$\mathrm{A\,m^{-1}}$.  The following symbols are used throughout the library.
+hat, and time is measured in seconds.  Magnetic field strength $\vect{H}$ is in
+$\mathrm{A\,m^{-1}}$, and effective flux density $\vect{B}_{\mathrm{eff}}$ is in
+tesla, with $\vect{B}_{\mathrm{eff}}=\mu_0\Heff$ when they describe the same
+effective interaction.  The following symbols are used throughout the library.
 
 \begin{description}
     \item[$\mvec$] Normalized magnetization, with $\norm{\mvec}=1$.
@@ -21,7 +23,8 @@ $\mathrm{A\,m^{-1}}$.  The following symbols are used throughout the library.
     \item[$\beta$] Signed torque ratio,
         $\beta=\tau_{\mathrm{FLT}}/\tau_{\mathrm{DLT}}$.
     \item[$\tau_{\mathrm{DLT}}$, $\tau_{\mathrm{FLT}}$] Damping-like and
-        field-like torque amplitudes, respectively; both have field units.
+        field-like torque amplitudes, respectively; both are in tesla in the
+        LLGS equations.
     \item[$e$] Positive elementary charge.
     \item[$\mu_0$] Vacuum permeability.
     \item[$\muB$] Bohr magneton.
@@ -44,7 +47,11 @@ The following values reproduce
 \end{align*}
 
 \paragraph{Convention warning.}
-Some references define the effective field as $\vect{B}_{\mathrm{eff}}$ in tesla and
-use $\abs{\gamma}$, whereas this library uses $\Heff$ in $\mathrm{A\,m^{-1}}$ and
-$\gamma_0=\mu_0\abs{\gamma}$.  Check this convention before copying an equation into
-simulation code.
+The macrospin effective-field section of \emph{Spin Dynamics Modeling Reference}
+defines both $\Heff$ in $\mathrm{A\,m^{-1}}$ and
+$\vect{B}_{\mathrm{eff}}=\mu_0\Heff$ in tesla.
+The atomistic Hamiltonian and LLGS sections use $\vect{B}_{\mathrm{eff}}$ in
+tesla with $\gamma$ in $\mathrm{rad\,s^{-1}\,T^{-1}}$, as do the macrospin and
+ASTRO implementations~\cite{ode-llg-code,astro-code}.  Convert an $\vect{H}$-field in
+$\mathrm{A\,m^{-1}}$ to its tesla-valued equivalent before using it in this
+LLGS equation; a code variable named \texttt{Hext} does not determine its units.

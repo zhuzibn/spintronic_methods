@@ -30,6 +30,23 @@ If each physical bond is instead included only once, for example in a
 unique-bond sum $\sum_{\langle i,j\rangle}$, both factors of $1/2$ must be
 omitted.  These are equivalent pair-counting conventions and must not be mixed.
 
+\paragraph{Layered exchange example.}
+For ferromagnetic exchange within a plane and antiferromagnetic exchange
+between planes, the ASTRO sign convention in
+Eq.~\eqref{eq:atomistic-hamiltonian} gives~\cite{astro-code}
+\begin{equation}
+    J_{\parallel}<0,
+    \qquad
+    J_{\perp}>0,
+    \label{eq:a-type-exchange-signs}
+\end{equation}
+where $J_{\parallel}$ couples in-plane neighbors and $J_{\perp}$ couples
+neighbors in adjacent planes.  A source that puts a minus sign in front of
+the exchange sum uses the opposite signs for $J_{\parallel}$ and $J_{\perp}$.
+The corresponding A-type arrangement is
+described in \emph{Spintronics Concepts and Symmetry}; its structural
+classification remains \textbf{Reference needed}.
+
 Figure~\ref{fig:atomistic-bond-interactions} collects the geometric quantities
 attached to one bond and distinguishes a physical bond from its two ordered
 appearances in the Hamiltonian sum.

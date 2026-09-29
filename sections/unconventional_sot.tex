@@ -1,0 +1,87 @@
+\section{Generating Unconventional Spin--Orbit Torque}
+
+Take the film normal as $\hat{\mathbf z}$ and drive an in-plane electric field
+$E_x\hat{\mathbf x}$.  Write $Q_z^{\,a}$ for a spin current flowing toward the
+receiving magnetic layer along $z$, with spin polarization along $a$.  The
+conventional spin Hall geometry produces $Q_z^{\,y}$; a nonzero $Q_z^{\,z}$
+instead supplies an out-of-plane spin polarization, often called a
+$\sigma_z$ component.  The spin-current component, its transmission across the
+interface, and the torque measured in the receiver are distinct quantities.
+The damping-like torque from a transmitted $\sigma_z$ component has the angular
+form $\mathbf m\times(\hat{\mathbf z}\times\mathbf m)$, up to the sign of its
+amplitude~\cite{ee237-week11,sot-stt-compact-model,zhang2024revisiting}.
+This torque vanishes at exact collinearity, $\mathbf m=\pm\hat{\mathbf z}$;
+the subsequent switching dynamics must therefore be evaluated for the actual
+initial state and other torques~\cite{zhang2024revisiting}.
+The examples below describe ways to \emph{allow or generate} this component;
+symmetry alone does not set its magnitude or establish that switching occurs.
+
+\subsection{Lower the Crystal Symmetry}
+
+A low-symmetry spin source can permit an out-of-plane torque for one in-plane
+current direction and forbid it for another.  For example, with a surviving
+$yz$ mirror, $E_x$ and the axial spin component $s_z$ both reverse, whereas
+$E_y$ does not.  A $z$-directed flow is unchanged by that mirror, so
+$Q_z^{\,z}\propto E_x$ is allowed while $Q_z^{\,z}\propto E_y$ is forbidden.
+WTe$_2$/ferromagnet bilayers exhibit this current-direction-dependent
+out-of-plane torque; the crystal orientation therefore matters when specifying
+the device axes~\cite{ee237-week11,macneill2017wte2}.
+
+\subsection{Use Magnetic Order to Rotate the Spin Polarization}
+
+The magnetization of a spin-source ferromagnet can remove symmetries that
+forbid spin-current components in a nonmagnetic source.  Davidson \emph{et al.}
+consider $E_x$ and the operations $\sigma_{xz}$, $\sigma_{xy}$, and $C_2^x$.
+With no magnetization, only $Q_z^{\,y}$ among the three $z$-flowing spin
+components survives all three operations.  For a source magnetization
+$\mathbf m_s\parallel\hat{\mathbf x}$, only $C_2^x$ remains: it reverses both
+the $z$ flow and the $z$ spin, making $Q_z^{\,z}$ symmetry-allowed.  The
+spin-rotated term in the perspective can be written schematically as
+\begin{equation}
+    \mathbf Q_z^{\,R}\propto
+    \mathbf m_s\times(\hat{\mathbf z}\times\mathbf E),
+    \qquad
+    \mathbf m_s\parallel\hat{\mathbf x},\quad
+    \mathbf E\parallel\hat{\mathbf x}
+    \ \Longrightarrow\ Q_z^{\,z}\ne 0\ \text{is allowed}.
+    \label{eq:ferromagnetic-spin-rotated-current}
+\end{equation}
+Reversing $\mathbf m_s$ reverses this term.  This is a statement about the
+source's allowed spin-current polarization, not a prediction of its size or of
+the receiver's switching outcome~\cite{davidson2020spin-currents}.
+
+\paragraph{Source status.}
+\textbf{Reference needed.}  The detailed ferromagnetic selection rule and
+Eq.~\eqref{eq:ferromagnetic-spin-rotated-current} come from the Davidson
+perspective and its processed explanation; an approved project reference is
+still needed for these details.
+
+A CoFeB/Ti/CoFeB trilayer provides a device example: the bottom in-plane
+magnetized layer or its interface generates both in-plane and out-of-plane
+spin-polarization components, and the upper perpendicular CoFeB layer is the
+receiver.  Reversing the bottom-layer magnetization reverses the reported
+switching polarity~\cite{yang2024ferromagnetic-trilayer}.
+
+\paragraph{Source status.}
+\textbf{Reference needed.}  The trilayer result has no approved project
+reference yet.
+
+\subsection{Design Electrical Asymmetry in a Polycrystalline Source}
+
+Broken electrical symmetry can also produce a $z$-polarized spin current
+without relying on a low-symmetry single crystal.  Liu \emph{et al.} report
+$z$-spin damping-like and field-like torques in sputtered polycrystalline
+heavy-metal devices with transverse and perpendicular electrical asymmetry.
+They vary the device length, width, thickness, and metal to tune the response,
+and demonstrate nearly full field-free switching of perpendicular FeCoB.
+The device geometry is therefore part of this generation
+route~\cite{liu2024electric-asymmetry}.
+
+\paragraph{Source status.}
+\textbf{Reference needed.}  The electrical-asymmetry mechanism and device
+result have no approved project reference yet.
+
+In each route, report the in-plane current direction, film normal, source
+magnetization where present, and receiving layer before assigning a sign to
+$\sigma_z$ or to its torque amplitude~\cite{ee237-week11,
+    sot-stt-compact-model}.

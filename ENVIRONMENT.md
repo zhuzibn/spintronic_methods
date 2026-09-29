@@ -6,7 +6,7 @@ repository layout.
 
 ## Required capabilities
 
-Building `spintronic_methods.pdf` requires:
+Building `spintronic_methods.pdf` and `spintronics_background.pdf` requires:
 
 - `pdflatex`;
 - `kpsewhich` for deterministic package discovery; and
@@ -25,11 +25,11 @@ No minimum tool versions are currently specified.
 
 ## Optional capabilities
 
-`latexmk` is recommended for complete-document builds. If it is unavailable,
+`latexmk` is recommended for document builds. If it is unavailable,
 running `pdflatex` twice is the supported fallback.
 
 Inkscape is needed only to regenerate a PDF figure companion after editing its
-SVG source. It is not needed to build `spintronic_methods.pdf` from committed
+SVG source. It is not needed to build either document PDF from committed
 sources.
 
 ## Ubuntu and WSL setup

@@ -33,27 +33,11 @@ directly for these notes and still needs a dedicated literature reference.
     \label{fig:a-type-afm-stacking}
 \end{figure}
 
-For classical unit spins $\svec_i$, the exchange part of the atomistic
-Hamiltonian can be written in the ASTRO sign convention as~\cite{astro-code}
-\begin{equation}
-    \mathcal{H}_{\mathrm{ex}}
-    = \frac{1}{2}\sum_{i\ne j}J_{ij}\,\svec_i\cdot\svec_j.
-    \label{eq:a-type-exchange}
-\end{equation}
-In this convention, A-type order is favored by
-\begin{equation}
-    J_{\parallel}<0,
-    \qquad
-    J_{\perp}>0,
-    \label{eq:a-type-exchange-signs}
-\end{equation}
-where $J_{\parallel}$ couples neighbors within a plane and $J_{\perp}$ couples
-neighbors in adjacent planes.  Thus the in-plane bonds favor parallel
-alignment, whereas the interplane bonds favor antiparallel alignment.  Some
-publications place a minus sign in front of the exchange sum; their signs of
-$J$ are reversed.  The sign convention and pair counting in
-Eq.~\eqref{eq:a-type-exchange} are the same as those used in the full atomistic
-Hamiltonian in Eq.~\eqref{eq:atomistic-hamiltonian} and in ASTRO~\cite{astro-code}.
+The ferromagnetic bonds within each plane and antiferromagnetic bonds between
+planes are illustrated in Fig.~\ref{fig:a-type-afm-exchange}.  The exchange
+sign convention and pair counting for modeling this arrangement are given in
+the atomistic Hamiltonian of \emph{Spin Dynamics Modeling
+Reference}~\cite{astro-code}.
 
 \begin{figure}[htbp]
     \centering
